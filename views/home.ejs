@@ -1,0 +1,9 @@
+<center><h1>Konnichiwa!</h1></center>
+<center>List of Available Mangas!</center>
+<ol>
+    <center>    <% list.forEach(function(manga){%>
+                <li><a href="/mangas/<%=manga.name%>/2"><%= manga.title %></a></li>
+
+                <%})%>
+    </center>
+</ol>
