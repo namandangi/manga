@@ -1,0 +1,6 @@
+<center>Found Mangas :</center>
+<ol>
+<% mangas.forEach(function(manga){ %>
+    <center><a href="/manga-search/<%= manga.name%>/2"><%= manga.title%></a></center>
+<%})%>
+</ol>
