@@ -1,0 +1,8 @@
+<center>All Available Chapters</center>
+<center>
+    <% allChaps.forEach((chap,i)=>{%>
+
+            <a href="/mangas/<%= chap.name%>/<%=chap.id%>"><%= chap.title%></a>
+            <br>
+<%})%>
+</center>
