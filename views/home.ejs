@@ -1,9 +1,25 @@
 <center><h1>Konnichiwa!</h1></center>
+
+
+    <center><h3>Search for a Manga!</h3>
+        <form action="/search" method="GET">
+            <input class="form-control" type="text" name="Search" placeholder="Search" aria-label="Search">
+            <button>Search</button>
+        </form>
+    </center>
+    <br>
 <center>List of Available Mangas!</center>
 <ol>
     <center>    <% list.forEach(function(manga){%>
-                <li><a href="/mangas/<%=manga.name%>/2"><%= manga.title %></a></li>
-
+            <form action="/mangas/<%=manga.name%>/" method="GET">
+                <li><a href="/mangas/<%=manga.name%>/"><%= manga.title %></a></li>
+            </form>
                 <%})%>
+                
     </center>
 </ol>
+<!-- 
+<h3>video here</h3>
+<video src="blob:https://animesource.me:7998/8f3cdfca-2131-487b-bd27-5b960200c949">
+    <source src="" type="video/mp4">
+</video> -->
