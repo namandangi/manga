@@ -1,25 +1,29 @@
-<center><h1>Konnichiwa!</h1></center>
+<%- include('./partials/header') %> 
 
-
-    <center><h3>Search for a Manga!</h3>
-        <form action="/search" method="GET">
-            <input class="form-control" type="text" name="search" placeholder="search" aria-label="search">
-            <button type="submit">search</button>
-        </form>
-    </center>
-    <br>
-<center>List of Available Mangas!</center>
+<center><h1><b>List of Available Mangas!</b></h1></center>
+<br>
 <ol>
     <center>    <% list.forEach(function(manga){%>
-            <form action="/mangas/<%=manga.name%>/" method="GET">
-                <li><a href="/mangas/<%=manga.name%>/"><%= manga.title %></a></li>
-            </form>
+            <form action="/mangas/<%=manga.name%>/" method="GET">         
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                  <div class="col-md-4">
+                    <img src="<%= manga.imgurl %>" class="card-img" alt="#" width="200" height="200">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title"> <h3><a href="/mangas/<%=manga.name%>/"><%= manga.title %></h3></a></h5>
+                      <!-- <p class="card-text">Add info here!</p> -->
+                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>            
+            </form> 
+
                 <%})%>
                 
     </center>
 </ol>
-<!-- 
-<h3>video here</h3>
-<video src="blob:https://animesource.me:7998/8f3cdfca-2131-487b-bd27-5b960200c949">
-    <source src="" type="video/mp4">
-</video> -->
+
+<%- include('./partials/footer') %> 

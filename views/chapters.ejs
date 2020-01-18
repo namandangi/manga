@@ -1,8 +1,12 @@
-<center>All Available Chapters</center>
+<%- include ('./partials/header') %> 
+
+<center><h1><b>List of Available Mangas!</h1></b></center>
+<br>
 <center>
     <% allChaps.forEach((chap,i)=>{%>
 
-            <a href="/mangas/<%= chap.name%>/<%=chap.id%>"><%= chap.title%></a>
-            <br>
+            <h3><a href="/mangas/<%= chap.name%>/<%=chap.id%>"><%= chap.title%></a></h3>
 <%})%>
 </center>
+
+<%- include('./partials/footer') %> 
