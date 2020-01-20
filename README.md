@@ -1,7 +1,12 @@
 # Comics (Manga Reader)
 
+[![HitCount](http://hits.dwyl.io/namandangi/comics.svg)](http://hits.dwyl.io/namandangi/comics)
+   
    A WebScrapper based Node.js project to improve the experience of reading mangas and watching animes. 
-   [![HitCount](http://hits.dwyl.io/namandangi/comics.svg)](http://hits.dwyl.io/namandangi/comics)
+   
+   ![](https://github.com/namandangi/comics/blob/master/public/docs/Screenshot%20from%202020-01-18%2008-11-57.png)
+   ![](https://github.com/namandangi/comics/blob/master/public/docs/Screenshot%20from%202020-01-18%2008-26-52.png)
+   ![](https://github.com/namandangi/comics/blob/master/public/docs/Screenshot%20from%202020-01-18%2008-14-05.png)
 
 ## Technology Stack :
 
@@ -10,7 +15,6 @@
    3. Embedded JavaScript for templating.
    4. Axios for promise based HTTP requests
    5. Cheerio.js for quick and flexible implementation of core jQuery
-   6. 
 
 ## Build Instructions 
  
