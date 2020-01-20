@@ -117,7 +117,7 @@ var express = require('express'),
         //       mangaList[i]    = {title : $(manga).text() , name : mangaNameList[i], url : $(manga).attr('href')};
         //         console.log(mangaList[i]);
         // });
-        $('.tab-thumb').children().each(function(i,manga){
+        $('.tab -thumb').children().each(function(i,manga){
             mangaNameList[i] = $(manga).attr('title').toString().replace(/\s+/g, '-').toLowerCase();
             mangaList[i] = {title : $(manga).attr('title') , name : mangaNameList[i], url : $(manga).attr('href') , imgurl : $(manga).find('.img-responsive').attr('src')};
             console.log(mangaList[i]);
