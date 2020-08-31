@@ -6,6 +6,7 @@
    
    ![](https://github.com/namandangi/comics/blob/master/public/docs/Screenshot%20from%202020-01-18%2008-11-57.png)
    ![](https://github.com/namandangi/comics/blob/master/public/docs/Screenshot%20from%202020-01-18%2008-26-52.png)
+   ![](https://github.com/namandangi/comics/blob/master/public/docs/Screenshot%20from%202020-01-20%2020-37-36.png)
    ![](https://github.com/namandangi/comics/blob/master/public/docs/Screenshot%20from%202020-01-18%2008-14-05.png)
 
 ## Technology Stack :
