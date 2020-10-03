@@ -3,6 +3,7 @@
 /* eslint-disable no-unused-vars */
 const axios = require('axios');
 const cheerio = require('cheerio');
+const puppeteer = require('puppeteer');
 
 const favManga = [];
 let mangaUrl;
@@ -59,32 +60,25 @@ exports.getMangaByName = async (req, res) => {
       id = i;
     }
   }
-  await axios.get(mangaUrl).then((response) => {
-    const $ = cheerio.load(response.data);
-    $('.wp-manga-chapter').each((i, name) => {
+  // pupeteer setup, headless and no timeout
+  const browser = await puppeteer.launch({ headless: true });
+  const page = await browser.newPage();
+  // waitUntil: 'networkidle0' ~ if set along with time-out it makes loading too slow
+  await page.goto(mangaUrl, { timeout: 0 });
+  const content = await page.content();
+  const $ = cheerio.load(content);
+  $('li.wp-manga-chapter')
+    // .slice(0, 10)    // use slice to limit the no. of chapters to be scraped
+    .each(async (i, name) => {
       chapterLink[i] = {
         id: i,
         name: mangaList[id].name,
-        title: $(name).text(),
+        title: $(name).text().toString().replace(/\s+/g, ' '),
         url: $(name).find('a').attr('href'),
       };
-      //   console.log(chapterLink[i]);
+      console.log(chapterLink[i]);
     });
-  });
-  if (chapterLink.length <= 1) {
-    await axios.get(chapterLink[0].url).then((response) => {
-      const $ = cheerio.load(response.data);
-      $('.wp-manga-chapter').each((i, name) => {
-        chapterLink[i] = {
-          id: i,
-          name: mangaList[id].name,
-          title: $(name).text(),
-          url: $(name).find('a').attr('href'),
-        };
-        // console.log(chapterLink[i]);
-      });
-    });
-  }
+  console.log(chapterLink[0].url);
   res.render('chapters', { allChaps: chapterLink });
 };
 
@@ -98,7 +92,6 @@ exports.getMangaChapter = async (req, res) => {
   }
 
   const { url } = chapterLink[req.params.id];
-  //   console.log(url);
   await axios.get(url).then((response) => {
     const $ = cheerio.load(response.data);
     // eslint-disable-next-line func-names
@@ -144,6 +137,5 @@ exports.searchManga = async (req, res) => {
 
 exports.getFavourites = async (req, res) => {
   favManga.push(req.query.value);
-  //   console.log(favManga);
   res.render('favourite', { list: favManga });
 };
