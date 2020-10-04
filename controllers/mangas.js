@@ -1,3 +1,5 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable max-len */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
@@ -8,8 +10,8 @@ const puppeteer = require('puppeteer');
 const favManga = [];
 let mangaUrl;
 let chapterNumber = 1;
-const mangaNameList = [];
-const chapterLink = [
+// const mangaNameList;
+const chapterList = [
   {
     id: Number,
     name: String,
@@ -21,33 +23,34 @@ const mangaList = [
   {
     title: String,
     name: String,
-    url: String,
+    rating: Number,
+    mangaUrl: String,
     imgurl: String,
   },
 ];
 const imgs = [];
 
 exports.getMangas = async (req, res) => {
-  await axios.get('https://www.mangazuki.online/').then((response) => {
+  await axios.get('https://kissmanga.link/').then((response) => {
     const $ = cheerio.load(response.data);
 
     /* The code below is used to get image-urls along with chapter-urls */
-    $('.item-thumb')
-      .children()
-      .each((i, manga) => {
-        mangaNameList[i] = $(manga)
-          .attr('title')
-          .toString()
-          .replace(/\s+/g, '-')
-          .toLowerCase();
-        mangaList[i] = {
-          title: $(manga).attr('title'),
-          name: mangaNameList[i],
-          url: $(manga).attr('href'),
-          imgurl: $(manga).find('.img-responsive').attr('src'),
-        };
-        console.log(mangaList[i]);
-      });
+    $('.page-item-detail').each((i, manga) => {
+      const mangaName = $(manga)
+        .find('.item-thumb > a')
+        .attr('title')
+        .toString()
+        .replace(/\s+/g, '-')
+        .toLowerCase();
+      mangaList[i] = {
+        title: $(manga).find('.item-thumb > a').attr('title'),
+        name: mangaName,
+        rating: $(manga).find('.score').text(),
+        mangaUrl: $(manga).find('.item-thumb > a').attr('href'),
+        imgurl: $(manga).find('.item-thumb > a > img').attr('src'),
+      };
+      console.log(mangaList[i]);
+    });
   });
   res.render('home.ejs', { list: mangaList });
 };
@@ -56,30 +59,59 @@ exports.getMangaByName = async (req, res) => {
   let id;
   for (let i = 0; i < mangaList.length; i++) {
     if (req.params.name === mangaList[i].name) {
-      mangaUrl = mangaList[i].url;
+      mangaUrl = mangaList[i].mangaUrl;
       id = i;
     }
   }
+  /**  Below code-snippet is headless way of scrapping content
+  /* Too slow, but reliable beacuse we it handles dynamic data scrapping without the use of xhr request info.
+  /* However for much faster scrapping we should avoid the use of automation tools like selenium
+  */
+
   // pupeteer setup, headless and no timeout
-  const browser = await puppeteer.launch({ headless: true });
-  const page = await browser.newPage();
-  // waitUntil: 'networkidle0' ~ if set along with time-out it makes loading too slow
-  await page.goto(mangaUrl, { timeout: 0 });
-  const content = await page.content();
-  const $ = cheerio.load(content);
-  $('li.wp-manga-chapter')
-    // .slice(0, 10)    // use slice to limit the no. of chapters to be scraped
-    .each(async (i, name) => {
-      chapterLink[i] = {
-        id: i,
-        name: mangaList[id].name,
-        title: $(name).text().toString().replace(/\s+/g, ' '),
-        url: $(name).find('a').attr('href'),
-      };
-      console.log(chapterLink[i]);
-    });
-  console.log(chapterLink[0].url);
-  res.render('chapters', { allChaps: chapterLink });
+  // const browser = await puppeteer.launch({ headless: true });
+  // const page = await browser.newPage();
+  // // waitUntil: 'networkidle0' ~ if set along with time-out it makes loading too slow
+  // await page.goto(mangaUrl, { timeout: 0 });
+  // const content = await page.content();
+  // const $ = cheerio.load(content);
+  // $('li.wp-manga-chapter')
+  //   // .slice(0, 10)    // use slice to limit the no. of chapters to be scraped
+  //   .each(async (i, name) => {
+  //     chapterList[i] = {
+  //       id: i,
+  //       name: mangaList[id].name,
+  //       title: $(name).text().toString().replace(/\s+/g, ' '),
+  //       url: $(name).find('a').attr('href'),
+  //     };
+  //     console.log(chapterList[i]);
+  //   });
+
+  /* kissmanga loads all chapter links dynamically using pseudo elements like ::before
+  /* since these pseudo elements are not part of dom so we can't directly scrape them
+  /* thus we look for the xhr request made by kissmanga to it's server where it loads the link
+  /* we found that the xhr req was a post req which required the id of the manga, for which we made the
+  /* first req and found the mangaId
+  */
+
+  const { data } = await axios.get(mangaUrl);
+  const $ = cheerio.load(data);
+  const managaId = $('.rating-post-id').attr('value');
+  const response = await axios.post(
+    'https://kissmanga.link/wp-admin/admin-ajax.php',
+    `action=manga_get_chapters&manga=${managaId}`
+  );
+  const selector = cheerio.load(response.data);
+  selector('li.wp-manga-chapter > a').each((i, manga) => {
+    chapterList[i] = {
+      id: i,
+      name: mangaList[id].name,
+      title: selector(manga).text().toString().replace(/\s+/g, ' '),
+      url: selector(manga).attr('href'),
+    };
+    console.log(chapterList[i]);
+  });
+  res.render('chapters', { allChaps: chapterList });
 };
 
 exports.getMangaChapter = async (req, res) => {
@@ -88,10 +120,10 @@ exports.getMangaChapter = async (req, res) => {
   console.log(`${req.params.name} ${req.params.id}`);
   chapterNumber = req.params.id;
   for (let i = 0; i < mangaList.length; i++) {
-    if (mangaList[i].name === chapterLink[0].name) id2 = i;
+    if (mangaList[i].name === chapterList[0].name) id2 = i;
   }
 
-  const { url } = chapterLink[req.params.id];
+  const { url } = chapterList[req.params.id];
   await axios.get(url).then((response) => {
     const $ = cheerio.load(response.data);
     // eslint-disable-next-line func-names
@@ -108,29 +140,29 @@ exports.getMangaChapter = async (req, res) => {
 
 exports.searchManga = async (req, res) => {
   console.log(req.query.search);
-  const surl = `https://www.mangazuki.online/?s=${req.query.search
+  const surl = `https://kissmanga.link/?s=${req.query.search
     .toString()
     .split(' ')
     .join('+')}&post_type=wp-manga`;
   console.log(surl);
   await axios.get(surl).then((response) => {
     const $ = cheerio.load(response.data);
-    $('.tab-thumb')
-      .children()
-      .each((i, manga) => {
-        mangaNameList[i] = $(manga)
-          .attr('title')
-          .toString()
-          .replace(/\s+/g, '-')
-          .toLowerCase();
-        mangaList[i] = {
-          title: $(manga).attr('title'),
-          name: mangaNameList[i],
-          url: $(manga).attr('href'),
-          imgurl: $(manga).find('.img-responsive').attr('src'),
-        };
-        console.log(mangaList[i]);
-      });
+    $('.c-tabs-item__content').each((i, manga) => {
+      const mangaName = $(manga)
+        .find('.tab-thumb > a')
+        .attr('title')
+        .toString()
+        .replace(/\s+/g, '-')
+        .toLowerCase();
+      mangaList[i] = {
+        title: $(manga).find('.tab-thumb > a').attr('title'),
+        name: mangaName,
+        rating: $(manga).find('.score').text(),
+        mangaUrl: $(manga).find('.tab-thumb > a').attr('href'),
+        imgurl: $(manga).find('.tab-thumb > a > img').attr('src'),
+      };
+      console.log(mangaList[i]);
+    });
   });
   res.render('search', { list: mangaList });
 };
