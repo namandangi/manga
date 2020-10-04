@@ -8,8 +8,8 @@ const puppeteer = require('puppeteer');
 const favManga = [];
 let mangaUrl;
 let chapterNumber = 1;
-const mangaNameList = [];
-const chapterLink = [
+// const mangaNameList;
+const chapterList = [
   {
     id: Number,
     name: String,
@@ -21,33 +21,34 @@ const mangaList = [
   {
     title: String,
     name: String,
-    url: String,
+    rating: Number,
+    mangaUrl: String,
     imgurl: String,
   },
 ];
 const imgs = [];
 
 exports.getMangas = async (req, res) => {
-  await axios.get('https://www.mangazuki.online/').then((response) => {
+  await axios.get('https://kissmanga.link/').then((response) => {
     const $ = cheerio.load(response.data);
 
     /* The code below is used to get image-urls along with chapter-urls */
-    $('.item-thumb')
-      .children()
-      .each((i, manga) => {
-        mangaNameList[i] = $(manga)
-          .attr('title')
-          .toString()
-          .replace(/\s+/g, '-')
-          .toLowerCase();
-        mangaList[i] = {
-          title: $(manga).attr('title'),
-          name: mangaNameList[i],
-          url: $(manga).attr('href'),
-          imgurl: $(manga).find('.img-responsive').attr('src'),
-        };
-        console.log(mangaList[i]);
-      });
+    $('.page-item-detail').each((i, manga) => {
+      const mangaName = $(manga)
+        .find('.item-thumb > a')
+        .attr('title')
+        .toString()
+        .replace(/\s+/g, '-')
+        .toLowerCase();
+      mangaList[i] = {
+        title: $(manga).find('.item-thumb > a').attr('title'),
+        name: mangaName,
+        rating: $(manga).find('.score').text(),
+        mangaUrl: $(manga).find('.item-thumb > a').attr('href'),
+        imgurl: $(manga).find('.item-thumb > a > img').attr('src'),
+      };
+      console.log(mangaList[i]);
+    });
   });
   res.render('home.ejs', { list: mangaList });
 };
@@ -70,16 +71,15 @@ exports.getMangaByName = async (req, res) => {
   $('li.wp-manga-chapter')
     // .slice(0, 10)    // use slice to limit the no. of chapters to be scraped
     .each(async (i, name) => {
-      chapterLink[i] = {
+      chapterList[i] = {
         id: i,
         name: mangaList[id].name,
         title: $(name).text().toString().replace(/\s+/g, ' '),
         url: $(name).find('a').attr('href'),
       };
-      console.log(chapterLink[i]);
+      console.log(chapterList[i]);
     });
-  console.log(chapterLink[0].url);
-  res.render('chapters', { allChaps: chapterLink });
+  res.render('chapters', { allChaps: chapterList });
 };
 
 exports.getMangaChapter = async (req, res) => {
@@ -88,10 +88,10 @@ exports.getMangaChapter = async (req, res) => {
   console.log(`${req.params.name} ${req.params.id}`);
   chapterNumber = req.params.id;
   for (let i = 0; i < mangaList.length; i++) {
-    if (mangaList[i].name === chapterLink[0].name) id2 = i;
+    if (mangaList[i].name === chapterList[0].name) id2 = i;
   }
 
-  const { url } = chapterLink[req.params.id];
+  const { url } = chapterList[req.params.id];
   await axios.get(url).then((response) => {
     const $ = cheerio.load(response.data);
     // eslint-disable-next-line func-names
@@ -108,29 +108,29 @@ exports.getMangaChapter = async (req, res) => {
 
 exports.searchManga = async (req, res) => {
   console.log(req.query.search);
-  const surl = `https://www.mangazuki.online/?s=${req.query.search
+  const surl = `https://kissmanga.link/?s=${req.query.search
     .toString()
     .split(' ')
     .join('+')}&post_type=wp-manga`;
   console.log(surl);
   await axios.get(surl).then((response) => {
     const $ = cheerio.load(response.data);
-    $('.tab-thumb')
-      .children()
-      .each((i, manga) => {
-        mangaNameList[i] = $(manga)
-          .attr('title')
-          .toString()
-          .replace(/\s+/g, '-')
-          .toLowerCase();
-        mangaList[i] = {
-          title: $(manga).attr('title'),
-          name: mangaNameList[i],
-          url: $(manga).attr('href'),
-          imgurl: $(manga).find('.img-responsive').attr('src'),
-        };
-        console.log(mangaList[i]);
-      });
+    $('.c-tabs-item__content').each((i, manga) => {
+      const mangaName = $(manga)
+        .find('.tab-thumb > a')
+        .attr('title')
+        .toString()
+        .replace(/\s+/g, '-')
+        .toLowerCase();
+      mangaList[i] = {
+        title: $(manga).find('.tab-thumb > a').attr('title'),
+        name: mangaName,
+        rating: $(manga).find('.score').text(),
+        mangaUrl: $(manga).find('.tab-thumb > a').attr('href'),
+        imgurl: $(manga).find('.tab-thumb > a > img').attr('src'),
+      };
+      console.log(mangaList[i]);
+    });
   });
   res.render('search', { list: mangaList });
 };
