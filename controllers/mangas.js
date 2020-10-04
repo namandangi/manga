@@ -1,3 +1,5 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable max-len */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
@@ -57,28 +59,58 @@ exports.getMangaByName = async (req, res) => {
   let id;
   for (let i = 0; i < mangaList.length; i++) {
     if (req.params.name === mangaList[i].name) {
-      mangaUrl = mangaList[i].url;
+      mangaUrl = mangaList[i].mangaUrl;
       id = i;
     }
   }
+  /**  Below code-snippet is headless way of scrapping content
+  /* Too slow, but reliable beacuse we it handles dynamic data scrapping without the use of xhr request info.
+  /* However for much faster scrapping we should avoid the use of automation tools like selenium
+  */
+
   // pupeteer setup, headless and no timeout
-  const browser = await puppeteer.launch({ headless: true });
-  const page = await browser.newPage();
-  // waitUntil: 'networkidle0' ~ if set along with time-out it makes loading too slow
-  await page.goto(mangaUrl, { timeout: 0 });
-  const content = await page.content();
-  const $ = cheerio.load(content);
-  $('li.wp-manga-chapter')
-    // .slice(0, 10)    // use slice to limit the no. of chapters to be scraped
-    .each(async (i, name) => {
-      chapterList[i] = {
-        id: i,
-        name: mangaList[id].name,
-        title: $(name).text().toString().replace(/\s+/g, ' '),
-        url: $(name).find('a').attr('href'),
-      };
-      console.log(chapterList[i]);
-    });
+  // const browser = await puppeteer.launch({ headless: true });
+  // const page = await browser.newPage();
+  // // waitUntil: 'networkidle0' ~ if set along with time-out it makes loading too slow
+  // await page.goto(mangaUrl, { timeout: 0 });
+  // const content = await page.content();
+  // const $ = cheerio.load(content);
+  // $('li.wp-manga-chapter')
+  //   // .slice(0, 10)    // use slice to limit the no. of chapters to be scraped
+  //   .each(async (i, name) => {
+  //     chapterList[i] = {
+  //       id: i,
+  //       name: mangaList[id].name,
+  //       title: $(name).text().toString().replace(/\s+/g, ' '),
+  //       url: $(name).find('a').attr('href'),
+  //     };
+  //     console.log(chapterList[i]);
+  //   });
+
+  /* kissmanga loads all chapter links dynamically using pseudo elements like ::before
+  /* since these pseudo elements are not part of dom so we can't directly scrape them
+  /* thus we look for the xhr request made by kissmanga to it's server where it loads the link
+  /* we found that the xhr req was a post req which required the id of the manga, for which we made the
+  /* first req and found the mangaId
+  */
+
+  const { data } = await axios.get(mangaUrl);
+  const $ = cheerio.load(data);
+  const managaId = $('.rating-post-id').attr('value');
+  const response = await axios.post(
+    'https://kissmanga.link/wp-admin/admin-ajax.php',
+    `action=manga_get_chapters&manga=${managaId}`
+  );
+  const selector = cheerio.load(response.data);
+  selector('li.wp-manga-chapter > a').each((i, manga) => {
+    chapterList[i] = {
+      id: i,
+      name: mangaList[id].name,
+      title: selector(manga).text().toString().replace(/\s+/g, ' '),
+      url: selector(manga).attr('href'),
+    };
+    console.log(chapterList[i]);
+  });
   res.render('chapters', { allChaps: chapterList });
 };
 
