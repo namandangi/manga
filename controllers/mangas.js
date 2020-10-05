@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-param-reassign */
 /* eslint-disable object-shorthand */
 /* eslint-disable comma-dangle */
@@ -9,46 +10,29 @@ const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
 const Manga = require('../models/manga');
 
-const chapterList = [
-  {
-    id: Number,
-    name: String,
-    title: String,
-    url: String,
-  },
-];
-const mangaList = [
-  {
-    title: String,
-    name: String,
-    rating: Number,
-    mangaUrl: String,
-    imgUrl: String,
-  },
-];
-
 exports.getMangas = async (req, res) => {
+  const mangaList = [];
   await axios.get('https://kissmanga.link/').then((response) => {
     const $ = cheerio.load(response.data);
 
     /*
       The code below is used to get image-urls along with chapter-urls
     */
-    $('.page-item-detail').each((i, manga) => {
+    $('.page-item-detail').each((id, manga) => {
       const mangaName = $(manga)
         .find('.item-thumb > a')
         .attr('title')
         .toString()
         .replace(/\s+/g, '-')
         .toLowerCase();
-      mangaList[i] = {
+      mangaList[id] = {
         title: $(manga).find('.item-thumb > a').attr('title'),
         name: mangaName,
         rating: Number($(manga).find('.score').text()),
         mangaUrl: $(manga).find('.item-thumb > a').attr('href'),
         imgUrl: $(manga).find('.item-thumb > a > img').attr('src'),
       };
-      console.log(mangaList[i]);
+      console.log(mangaList[id]);
     });
   });
   mangaList.forEach(async (manga) => {
@@ -69,6 +53,7 @@ exports.getMangas = async (req, res) => {
 exports.getMangaByName = async (req, res) => {
   let mangaName;
   let mangaUrl;
+  const chapterList = [];
   const { name } = req.params;
   const doc = await Manga.findOne({ name: name });
   console.log(doc);
@@ -183,6 +168,7 @@ exports.getMangaChapter = async (req, res) => {
 };
 
 exports.searchManga = async (req, res) => {
+  const mangaList = [];
   const searchUrl = `https://kissmanga.link/?s=${req.query.search
     .toString()
     .split(' ')
@@ -222,8 +208,69 @@ exports.searchManga = async (req, res) => {
   res.render('search', { list: mangaList });
 };
 
-exports.getFavourites = async (req, res) => {
-  const favManga = [];
-  favManga.push(req.query.value);
-  res.render('favourite', { list: favManga });
+exports.getByTag = async (req, res) => {
+  const mangaList = [];
+  const { tag } = req.params;
+  const queries = req.query;
+  const limit = queries === undefined ? 10 : Number(queries.limit);
+  const { data } = await axios.get(
+    `https://kissmanga.link/all-manga/?m_orderby=${tag}`
+  );
+  const $ = cheerio.load(data);
+  $('.page-item-detail').each((id, manga) => {
+    mangaList.push({
+      title: $(manga).find('.post-title > h3 > a').text(),
+      name: $(manga)
+        .find('.post-title > h3 > a')
+        .text()
+        .toString()
+        .replace(/\s+/g, '-')
+        .toLowerCase(),
+      mangaUrl: $(manga).find('.post-title > h3 > a').attr('href'),
+      rating: $(manga).find('.score').text(),
+      imgUrl: $(manga).find('.item-thumb > a > img').attr('src'),
+    });
+  });
+
+  /*
+   * 10 items load initially, 10 items load after hitting a XML request
+   * so therefore, 10 + 10*iterator = limit
+   */
+  const iterator = (limit - 10) / 10;
+  for (let i = 1; i <= iterator; i += 1) {
+    const response = await axios.post(
+      'https://kissmanga.link/wp-admin/admin-ajax.php',
+      `action=madara_load_more&page=${i}&template=madara-core%2Fcontent%2Fcontent-archive&vars%5Bpaged%5D=1&vars%5Borderby%5D=post_title&vars%5Btemplate%5D=archive&vars%5Bsidebar%5D=right&vars%5Bpost_type%5D=wp-manga&vars%5Bpost_status%5D=publish&vars%5Border%5D=ASC&vars%5Bmeta_query%5D%5Brelation%5D=OR&vars%5Bmanga_archives_item_layout%5D=default`
+    );
+    const selector = cheerio.load(response.data);
+    selector('.page-item-detail').each((id, manga) => {
+      mangaList.push({
+        title: selector(manga).find('.post-title > h3 > a').text(),
+        name: selector(manga)
+          .find('.post-title > h3 > a')
+          .text()
+          .toString()
+          .replace(/\s+/g, '-')
+          .toLowerCase(),
+        mangaUrl: selector(manga).find('.post-title > h3 > a').attr('href'),
+        rating: selector(manga).find('.score').text(),
+        imgUrl: selector(manga).find('.item-thumb > a > img').attr('src'),
+      });
+    });
+  }
+
+  mangaList.forEach(async (manga) => {
+    manga.author = '';
+    manga.status = '';
+    manga.release = '';
+    manga.genre = [];
+    manga.chapter = [];
+    const doc = await Manga.findOne({ name: manga.name });
+    if (!doc) {
+      const newManga = new Manga(manga);
+      await newManga.save();
+    }
+  });
+  console.log('length of mangalist:', mangaList.length);
+  res.render('viewByTags', { list: mangaList });
 };
