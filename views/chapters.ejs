@@ -4,8 +4,9 @@
 <br>
 <center>
     <% allChaps.forEach((chap,i)=>{%>
-
-            <h3><a href="/mangas/<%= chap.name%>/<%=chap.id%>"><%= chap.title%></a></h3>
+            <% let id = allChaps.length-1-i;%>
+            <h3><a href="/mangas/read/<%= mangaName%>/<%=i%>"><%= chap.chapterTitle%></a></h3>
+            <h5>&emsp; &emsp; &emsp; <%= chap.postedAt%></h5>
 <%})%>
 </center>
 

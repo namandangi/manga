@@ -2,11 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 const express = require('express');
-const rp = require('request-promise');
-const axios = require('axios');
-const cheerio = require('cheerio');
 const mongoose = require('mongoose');
 const dotEnv = require('dotenv');
 const morgan = require('morgan');
@@ -28,6 +24,6 @@ const mangaRouter = require('./routes/mangas');
 
 app.use('', mangaRouter);
 
-app.listen(process.env.PORT || 3000, process.env.IP, () => {
+app.listen(process.env.PORT || 8000, process.env.IP, () => {
   console.log(`server running on port ${process.env.PORT}`);
 });

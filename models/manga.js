@@ -1,9 +1,48 @@
 const mongoose = require('mongoose');
 
 const mangaSchema = new mongoose.Schema({
-  title: String,
-  name: String,
-  url: [String],
+  title: {
+    type: String,
+    trim: true,
+    unique: true,
+    required: true,
+  },
+  name: {
+    type: String,
+    trim: true,
+    unique: true,
+    required: true,
+  },
+  mangaUrl: String,
+  imgUrl: String,
+  rating: {
+    type: Number,
+    default: 0,
+    min: [0, 'Unrated'],
+    max: 5,
+  },
+  release: {
+    type: String,
+    trim: true,
+  },
+  status: {
+    type: String,
+    trim: true,
+  },
+  author: {
+    type: String,
+    trim: true,
+  },
+  genre: [String],
+  chapter: [
+    {
+      id: Number,
+      chapterTitle: String,
+      postedAt: String,
+      chapterUrl: String,
+      chapterImgUrl: [String],
+    },
+  ],
 });
 
 const Manga = mongoose.model('Manga', mangaSchema);
