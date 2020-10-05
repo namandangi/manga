@@ -5,7 +5,7 @@
 <center>
     <% allChaps.forEach((chap,i)=>{%>
             <% let id = allChaps.length-1-i;%>
-            <h3><a href="/mangas/<%= mangaName%>/<%=i%>"><%= chap.chapterTitle%></a></h3>
+            <h3><a href="/mangas/read/<%= mangaName%>/<%=i%>"><%= chap.chapterTitle%></a></h3>
             <h5>&emsp; &emsp; &emsp; <%= chap.postedAt%></h5>
 <%})%>
 </center>

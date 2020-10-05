@@ -9,8 +9,8 @@
     <% if(number>1){%>
         <% var nextchap = (Number)(number)+1; var prevchap = (Number)(number)-1;} %>
 
-    <a href="/mangas/<%=name%>/<%=prevchap%>">Previous</a>
+    <a href="/mangas/read/<%=name%>/<%=prevchap%>">Previous</a>
     <a href="/mangas">Home</a>
-    <a href="/mangas/<%=name%>/<%=nextchap%>">Next</a>
+    <a href="/mangas/read/<%=name%>/<%=nextchap%>">Next</a>
 
     <%- include('./partials/footer') %> 
