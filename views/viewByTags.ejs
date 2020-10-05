@@ -1,0 +1,30 @@
+<%- include ('./partials/header') %> 
+
+<center><h1><b>List of Available Mangas!</b></h1></center>
+<br>
+<ol>
+    <center>    <% list.forEach(function(manga){%>
+            <form action="/mangas/read/<%=manga.name%>/" method="GET">         
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                  <div class="col-md-4">
+                    <img src="<%= manga.imgUrl %>" class="card-img" alt="#" width="200" height="200">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title"> <h3><a href="/mangas/read/<%=manga.name%>/"><%= manga.title %></h3></a></h5>
+                      <!-- <p class="card-text">Add info here!</p> -->
+                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>            
+            </form> 
+
+                <%})%>
+                
+    </center>
+</ol>
+
+
+<%- include ('./partials/footer') %> 
