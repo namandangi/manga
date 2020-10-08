@@ -1,6 +1,5 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-param-reassign */
-/* eslint-disable object-shorthand */
 /* eslint-disable comma-dangle */
 /* eslint-disable max-len */
 /* eslint-disable no-console */
@@ -55,7 +54,7 @@ exports.getMangaByName = async (req, res) => {
   let mangaUrl;
   const chapterList = [];
   const { name } = req.params;
-  const doc = await Manga.findOne({ name: name });
+  const doc = await Manga.findOne({ name });
   console.log(doc);
   if (doc) {
     mangaUrl = doc.mangaUrl;
@@ -139,7 +138,7 @@ exports.getMangaByName = async (req, res) => {
   mangaDetail.chapter = chapterList;
   await Manga.update({ name: mangaName }, mangaDetail);
   // console.log(await Manga.find({ name: mangaName }));
-  res.render('chapters', { mangaName: mangaName, allChaps: chapterList });
+  res.render('chapters', { mangaName, allChaps: chapterList });
 };
 
 exports.getMangaChapter = async (req, res) => {
@@ -147,7 +146,7 @@ exports.getMangaChapter = async (req, res) => {
   let mangaName;
   const imgs = [];
   const { name, id } = req.params;
-  const doc = await Manga.findOne({ name: name });
+  const doc = await Manga.findOne({ name });
 
   if (doc) {
     mangaName = doc.title;
