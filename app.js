@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable comma-dangle */
 /* eslint-disable no-console */
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-undef */
 const express = require('express');
 const mongoose = require('mongoose');
@@ -17,7 +16,7 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
 app.use(
-  morgan(':method :url :status :res[content-length] - :response-time ms'),
+  morgan(':method :url :status :res[content-length] - :response-time ms')
 );
 dotEnv.config();
 

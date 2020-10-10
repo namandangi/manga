@@ -1,7 +1,6 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-param-reassign */
 /* eslint-disable comma-dangle */
-/* eslint-disable max-len */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 const axios = require('axios');
@@ -62,8 +61,8 @@ exports.getMangaByName = async (req, res) => {
     mangaName = doc.name;
   }
 
-  /* Below code-snippet is headless way of scrapping content
-     Too slow, but reliable beacuse we it handles dynamic data scrapping without the use of xhr request info.
+  /* Below code-snippet is headless way of scrapping content; its too slow, but reliable
+     beacuse we it handles dynamic data scrapping without the use of xhr request info.
      However for much faster scrapping we should avoid the use of automation tools like selenium
   */
 
@@ -95,8 +94,8 @@ exports.getMangaByName = async (req, res) => {
     kissmanga loads all chapter links dynamically using pseudo elements like ::before
     since these pseudo elements are not part of dom so we can't directly scrape them
     thus we look for the xhr request made by kissmanga to it's server where it loads the link
-    we found that the xhr req was a post req which required the id of the manga, for which we made the
-    first req and found the mangaId
+    we found that the xhr req was a post req which required the id of the manga, for which we
+    made the first req and found the mangaId
   */
 
   const { data } = await axios.get(mangaUrl);

@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Manga = require('../models/manga');
+const Chapter = require('../models/chapter');
 
 const { jwtSecret } = process.env;
 
@@ -71,21 +72,18 @@ exports.subscribeManga = async (req, res) => {
 };
 
 exports.likeChapter = async (req, res) => {
-  const { name, chapterId } = req.params;
+  const { name, id } = req.params;
   const manga = await Manga.findOne({ name });
   if (!manga) {
     res.status(404).json({ msg: 'Manga not found!' });
   }
-  function searchChapter(chapterObj) {
-    return chapterObj.id === chapterId;
-  }
-  const chapter = manga.chapter.filter(searchChapter);
-  if (!chapter) {
-    res.status(400).json({ msg: 'Chapter not found' });
-  }
+  const chapter = await Chapter.findOne({
+    mangaName: manga._id,
+    chapterId: id,
+  });
   const doc = await User.findOneAndUpdate(
     { username: req.user.username },
-    { $push: { likedChapters: chapter } },
+    { $push: { likedChapters: chapter._id } },
     { new: true }
   );
   res.status(200).json(doc);
