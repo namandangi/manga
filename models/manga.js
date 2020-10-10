@@ -36,11 +36,8 @@ const mangaSchema = new mongoose.Schema({
   genre: [String],
   chapter: [
     {
-      id: Number,
-      chapterTitle: String,
-      postedAt: String,
-      chapterUrl: String,
-      chapterImgUrl: [String],
+      ref: 'Chapter',
+      type: mongoose.Schema.Types.ObjectId,
     },
   ],
 });
