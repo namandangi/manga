@@ -8,6 +8,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
 const Manga = require('../models/manga');
+const Chapter = require('../models/chapter');
 
 exports.getMangas = async (req, res) => {
   const mangaList = [];
@@ -124,7 +125,8 @@ exports.getMangaByName = async (req, res) => {
   const selector = cheerio.load(response.data);
   selector('li.wp-manga-chapter').each((i, manga) => {
     chapterList[i] = {
-      id: i,
+      chapterId: i,
+      mangaName: doc._id,
       chapterTitle: selector(manga)
         .find('a')
         .text()
@@ -135,8 +137,19 @@ exports.getMangaByName = async (req, res) => {
     };
     console.log(chapterList[i]);
   });
-  mangaDetail.chapter = chapterList;
-  await Manga.update({ name: mangaName }, mangaDetail);
+  // mangaDetail.chapter = chapterList;
+  await Manga.update({ name: mangaName }, mangaDetail, { new: true });
+  chapterList.forEach(async (chapter) => {
+    const obj = await Chapter.findOne({ chapterTitle: chapter.chapterTitle });
+    if (!obj) {
+      const chapterObj = new Chapter(chapter);
+      await chapterObj.save();
+      await Manga.update(
+        { name: mangaName },
+        { $push: { chapter: chapterObj._id } }
+      );
+    }
+  });
   // console.log(await Manga.find({ name: mangaName }));
   res.render('chapters', { mangaName, allChaps: chapterList });
 };
@@ -144,13 +157,15 @@ exports.getMangaByName = async (req, res) => {
 exports.getMangaChapter = async (req, res) => {
   let mangaChapterUrl;
   let mangaName;
+  let chapterImgUrl;
   const imgs = [];
   const { name, id } = req.params;
-  const doc = await Manga.findOne({ name });
-
+  const doc = await Manga.findOne({ name }).populate('chapter').exec();
+  console.log(doc.chapter);
   if (doc) {
     mangaName = doc.title;
     mangaChapterUrl = doc.chapter[id].chapterUrl;
+    chapterImgUrl = doc.chapter[id].chapterImgUrl;
   }
 
   await axios.get(mangaChapterUrl).then((response) => {
@@ -158,11 +173,19 @@ exports.getMangaChapter = async (req, res) => {
     $('.wp-manga-chapter-img').each((i, img) => {
       imgs[i] = $(img).attr('src');
     });
-    res.render('index', {
-      images: imgs,
-      name: mangaName,
-      number: id,
-    });
+  });
+  if (chapterImgUrl.length === 0) {
+    const result = await Chapter.update(
+      { mangaName: doc._id },
+      { chapterImgUrl: imgs },
+      { new: true }
+    );
+    console.log(result);
+  }
+  res.render('index', {
+    images: imgs,
+    name: mangaName,
+    number: id,
   });
 };
 

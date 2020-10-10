@@ -2,6 +2,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const Manga = require('../models/manga');
 
 const { jwtSecret } = process.env;
 
@@ -53,4 +54,39 @@ exports.userDelete = async (req, res) => {
     res.status(404).json({ msg: 'User not found' });
   }
   res.status(200).json({ msg: 'ok' });
+};
+
+exports.subscribeManga = async (req, res) => {
+  const { name } = req.params;
+  const manga = await Manga.findOne({ name });
+  if (!manga) {
+    res.status(404).json({ msg: 'Manga not found!' });
+  }
+  const doc = await User.findOneAndUpdate(
+    { username: req.user.username },
+    { $push: { subscribedMangas: manga._id } },
+    { new: true }
+  );
+  res.status(200).json(doc);
+};
+
+exports.likeChapter = async (req, res) => {
+  const { name, chapterId } = req.params;
+  const manga = await Manga.findOne({ name });
+  if (!manga) {
+    res.status(404).json({ msg: 'Manga not found!' });
+  }
+  function searchChapter(chapterObj) {
+    return chapterObj.id === chapterId;
+  }
+  const chapter = manga.chapter.filter(searchChapter);
+  if (!chapter) {
+    res.status(400).json({ msg: 'Chapter not found' });
+  }
+  const doc = await User.findOneAndUpdate(
+    { username: req.user.username },
+    { $push: { likedChapters: chapter } },
+    { new: true }
+  );
+  res.status(200).json(doc);
 };
