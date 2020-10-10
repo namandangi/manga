@@ -21,10 +21,8 @@ const userSchema = new mongoose.Schema({
   ],
   likedChapters: [
     {
-      id: Number,
-      chapterTitle: String,
-      postedAt: String,
-      chapterUrl: String,
+      ref: 'Chapter',
+      type: mongoose.Schema.Types.ObjectId,
     },
   ],
   genres: [
