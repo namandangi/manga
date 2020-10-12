@@ -1,8 +1,8 @@
-# Comics (Manga Reader)
+# Manga!
 
-[![HitCount](http://hits.dwyl.io/namandangi/comics.svg)](http://hits.dwyl.io/namandangi/comics)
-   
-   A WebScraper based Node.js project to make reading mangas fun! 
+[![HitCount](http://hits.dwyl.io/namandangi/comics.svg)](http://hits.dwyl.io/namandangi/comics) ![](https://img.shields.io/github/issues/namandangi/manga?style=flat-square) ![](https://img.shields.io/github/languages/top/namandangi/manga?style=flat-square) ![](https://img.shields.io/github/languages/count/namandangi/manga?style=flat-square) 
+      
+   A web scrapper based Manga (a.k.a comics) reader. Search your favourite Mangas, explore by tags like, Most Viewed, High Rated, Latest Update or discover the dark, forbidden genres!
    
    ![](https://github.com/namandangi/comics/blob/master/public/docs/mangaList.jpeg)
    ![](https://github.com/namandangi/comics/blob/master/public/docs/chapterList.jpeg)
