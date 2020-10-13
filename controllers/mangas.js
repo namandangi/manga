@@ -2,10 +2,9 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable comma-dangle */
 /* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 const axios = require('axios');
 const cheerio = require('cheerio');
-const puppeteer = require('puppeteer');
+// const puppeteer = require('puppeteer');
 const Manga = require('../models/manga');
 const Chapter = require('../models/chapter');
 
@@ -136,7 +135,6 @@ exports.getMangaByName = async (req, res) => {
     };
     console.log(chapterList[i]);
   });
-  // mangaDetail.chapter = chapterList;
   await Manga.update({ name: mangaName }, mangaDetail, { new: true });
   chapterList.forEach(async (chapter) => {
     const obj = await Chapter.findOne({ chapterTitle: chapter.chapterTitle });
@@ -149,7 +147,6 @@ exports.getMangaByName = async (req, res) => {
       );
     }
   });
-  // console.log(await Manga.find({ name: mangaName }));
   res.render('chapters', { mangaName, allChaps: chapterList });
 };
 
@@ -160,7 +157,6 @@ exports.getMangaChapter = async (req, res) => {
   const imgs = [];
   const { name, id } = req.params;
   const doc = await Manga.findOne({ name }).populate('chapter').exec();
-  console.log(doc.chapter);
   if (doc) {
     mangaName = doc.title;
     mangaChapterUrl = doc.chapter[id].chapterUrl;
@@ -173,13 +169,12 @@ exports.getMangaChapter = async (req, res) => {
       imgs[i] = $(img).attr('src');
     });
   });
-  if (chapterImgUrl.length === 0) {
-    const result = await Chapter.update(
+  if (chapterImgUrl.length !== imgs.length) {
+    await Chapter.update(
       { mangaName: doc._id },
       { chapterImgUrl: imgs },
       { new: true }
     );
-    console.log(result);
   }
   res.render('index', {
     images: imgs,
@@ -223,7 +218,6 @@ exports.searchManga = async (req, res) => {
     if (!doc) {
       const newManga = new Manga(manga);
       await newManga.save();
-      console.log('New!', newManga);
     }
   });
   res.render('search', { list: mangaList });
@@ -292,6 +286,5 @@ exports.getByTag = async (req, res) => {
       await newManga.save();
     }
   });
-  console.log('length of mangalist:', mangaList.length);
   res.render('viewByTags', { list: mangaList });
 };
