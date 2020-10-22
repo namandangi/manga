@@ -5,7 +5,7 @@ const User = require('../models/user');
 const Manga = require('../models/manga');
 const Chapter = require('../models/chapter');
 
-const { jwtSecret } = process.env;
+const { jwtSecret } = require('../config/constant');
 
 exports.userSignUp = async (req, res) => {
   const { username, password } = req.body;
@@ -36,7 +36,7 @@ exports.userLogin = async (req, res) => {
     { username, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 6 },
     jwtSecret
   );
-  res.status(200).send({ user, token });
+  res.status(201).send({ user, token });
 };
 
 exports.userProfile = async (req, res) => {

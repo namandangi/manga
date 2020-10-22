@@ -31,3 +31,5 @@ main().then((server) => {
     console.log(`server running on port ${port}`);
   });
 });
+
+module.exports = app;
