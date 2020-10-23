@@ -1,0 +1,50 @@
+$sea-green: #00b19a;
+$grey: #f3f3f3;
+$off-white: #ede6e6;
+
+.contentBody {
+  display: flex;
+  flex-flow: column;
+}
+.hero {
+  min-height: 18.5rem;
+  background-color: $sea-green;
+}
+.content {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $grey;
+  padding: 1rem 15% 3rem 15%;
+  .btmReadmoreBtn {
+    width: 35px;
+    min-width: 0;
+    height: 35px;
+    border-radius: 35px;
+    padding: 0;
+    background-color: $off-white;
+  }
+}
+.genreTitle {
+  display: flex;
+  flex-flow: row;
+  padding: 1rem 0;
+  align-items: center;
+  font-family: 'Roboto, sans-serif';
+  img {
+    transform: rotate(-90deg);
+    margin: 0 1rem;
+  }
+}
+.manga {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  div {
+    width: 210px;
+    height: 210px;
+    margin: 0.5rem 0.5rem;
+  }
+}
