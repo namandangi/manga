@@ -1,7 +1,8 @@
+/* eslint-disable consistent-return */
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const { jwtSecret } = process.env;
+const { jwtSecret } = require('../config/constant');
 
 /**
  * Requires a token in request headers.
