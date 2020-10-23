@@ -1,102 +1,105 @@
-$light-grey: #EDE6E6;
+$light-grey: #ede6e6;
 
 .header {
-    display: flex;
-    flex-flow: row;
-    padding: 2rem 2rem 0 2rem;
+  display: flex;
+  flex-flow: row;
+  padding: 0.8rem 2rem;
 }
 .leftHeader {
-    display: flex;
-    flex-flow: row;
-    width: 50%;
-    align-items: center;
-    a {
-        color: black;
-    }
-    h5 {
-        padding: 0rem 1rem;
-    }
+  display: flex;
+  flex-flow: row;
+  width: 50%;
+  align-items: center;
+  a {
+    color: black;
+  }
+  h5 {
+    padding: 0rem 1rem;
+    font-size: 20px;
+  }
 }
 .rightHeader {
-    display: flex;
-    flex-flow: row;
-    justify-content: flex-end;
-    width: 50%;    
-    button {
-        border-radius: 25px;
-        margin: 0 0.35rem;
-        padding: 0 2rem;
-        text-transform: capitalize;
-        font-size: 1rem;
-        font-family: 'Roboto, sans-serif';
-    }
-    .registerBtn {
-        background-color: black;
-        color: white;
-    }
-    .loginBtn {
-        border-color: $light-grey;
-    }
-    .searchBtn {
-        padding: 0;
-        height: 45px;
-        width: 45px;
-        min-width: 0;
-        border-color: $light-grey;
-    }
-    hr {
-        width: 1.2px;
-        height: 70%;
-        align-self: center;
-        margin: 0 0.2rem;
-    }
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  width: 50%;
+  button {
+    border-radius: 25px;
+    margin: 0 0.35rem;
+    padding: 0 2rem;
+    text-transform: capitalize;
+    font-size: 1rem;
+    font-family: 'Roboto, sans-serif';
+  }
+  .registerBtn {
+    background-color: black;
+    color: white;
+  }
+  .loginBtn {
+    border-color: $light-grey;
+  }
+  .searchBtn {
+    padding: 0;
+    height: 45px;
+    width: 45px;
+    min-width: 0;
+    border-color: $light-grey;
+  }
+  hr {
+    width: 1.2px;
+    height: 70%;
+    align-self: center;
+    margin: 0 0.2rem;
+  }
 }
 .footer {
-    display: flex;
-    flex-flow: row;
+  display: flex;
+  flex-flow: row;
+  padding: 0.7rem 5rem;
 }
 .leftFooter {
-    width: 33%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0 0 0 5rem;
-    h5 {
-        color: #C5C5C5;
-        font-family: 'Roboto, sans-serif';
-    }
+  width: 33%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  h5 {
+    font-size: 16px;
+    color: #c5c5c5;
+    font-family: 'Roboto, sans-serif';
+  }
 }
 .middleFooter {
-    width: 33%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    span {
-        margin: 0 0.5rem;
-        font-size: 18px;
-        a {
-            color: black;
-        }
+  width: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    margin: 0 0.5rem;
+    font-size: 16px;
+    text-transform: capitalize;
+    a {
+      color: black;
     }
-    hr {
-        height: 40%;
-        align-self: center;
-        margin: 0 0.2rem;
-    }
+  }
+  hr {
+    height: 40%;
+    align-self: center;
+    margin: 0 0.2rem;
+  }
 }
 .rightFooter {
-    width: 33%;
-    display: flex;
-    flex-flow: row;
-    justify-content: flex-end;
-    padding: 0 5rem 0 0;
-    button {
-        padding: 0;
-        border-radius: 45px;
-        margin: 0 0.5rem;
-        height: 45px;
-        width: 45px;
-        min-width: 0;
-        border-color: $light-grey;
-    }
+  width: 33%;
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  align-items: center;
+  button {
+    padding: 0;
+    border-radius: 35px;
+    margin: 0 0.5rem;
+    height: 35px;
+    width: 35px;
+    min-width: 0;
+    border-color: $light-grey;
+  }
 }
