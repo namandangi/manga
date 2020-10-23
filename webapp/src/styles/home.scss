@@ -1,109 +1,118 @@
-$orange: #FC7B1E;
-$white: #FFFFFF;
-$off-white: #DBDAD9;
-$dark-blue: #262D38;
+$orange: #fc7b1e;
+$white: #ffffff;
+$off-white: #dbdad9;
+$dark-blue: #262d38;
 $m-plus: 'M PLUS Rounded 1c', sans-serif;
 $lato: 'Lato', sans-serif;
 
 .root {
-    background-image: url('../static/erwin_hero.png');
-    background-size: cover;
-    -moz-background-size: cover;
-    min-height: 1024px;
-    min-width: 1440px;
-    background-color: $dark-blue;
-    mix-blend-mode: lighten;
+  background-image: url('../static/erwin_hero.png');
+  background-size: cover;
+  -moz-background-size: cover;
+  min-height: 1024px;
+  min-width: 1440px;
+  background-color: $dark-blue;
+  mix-blend-mode: lighten;
 }
 .nav {
-    display: flex;
-    flex-flow: row;
-    justify-content: flex-end;
-    padding: 2rem 2rem 0 0;
-    font-size: 24px;
-    font-weight: normal;
-    mix-blend-mode: color-dodge;
-    a {
-        color: $white;
-    }
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  padding: 2rem 2rem 0 0;
+  font-size: 24px;
+  font-weight: normal;
+  mix-blend-mode: color-dodge;
+  a {
+    color: $white;
+  }
 }
 .highRated {
-    flex: 0 0 12rem;
-    align-self: center;
-    font-family: $m-plus;
-   
+  flex: 0 0 12rem;
+  align-self: center;
+  font-family: $m-plus;
 }
 .mostViewed {
-    flex: 0 0 12rem;
-    align-self: center;
-    font-family: $m-plus;
+  flex: 0 0 12rem;
+  align-self: center;
+  font-family: $m-plus;
 }
 .trending {
-    flex: 0 0 11rem;
-    align-self: center;
-    font-family: $m-plus
+  flex: 0 0 11rem;
+  align-self: center;
+  font-family: $m-plus;
 }
-.button {    
-    button {
-        border-radius: 25px;
-        width: 120px;
-        height: 50px;
-        font-size: 24px;
-        color: white;
-        background-color: $orange;
-        font-family: $m-plus;
-        // mixBlendMode: 'color-dodge'
-    }
+.button {
+  button {
+    border-radius: 25px;
+    width: 120px;
+    height: 50px;
+    font-size: 24px;
+    color: $white;
+    background-color: $orange;
+    font-family: $m-plus;
+    // mixBlendMode: 'color-dodge'
+  }
 }
 .title {
-    display: flex;
-    h1 {
-        justify-content: flex-start;
-        margin: 0 0 0 66px;
-        min-width: 258px;
-        min-height: 77px;
-        color: #DBDAD9;
-        font-family: $m-plus;
-        font-size: 64px;
-        font-weight: bolder;
-        align-self: start;
-    }
+  display: flex;
+  h1 {
+    justify-content: flex-start;
+    margin: 0 0 0 66px;
+    min-width: 258px;
+    min-height: 77px;
+    color: $off-white;
+    font-family: $m-plus;
+    font-size: 64px;
+    font-weight: bolder;
+    align-self: start;
+  }
 }
 .bodyCaption {
-    color: $white;
-    padding: 18rem 0 0 0;
-    h1 {
-        font-family: $lato;
-        font-size: 96px;
-        font-weight: bolder;
-    }
-    h3 {
-        font-family: $lato;
-        font-size: 48px;
-        font-weight: initial;
-    }
+  color: $white;
+  padding: 18rem 0 0 0;
+  h1 {
+    font-family: $lato;
+    font-size: 96px;
+    font-weight: bolder;
+  }
+  h3 {
+    font-family: $lato;
+    font-size: 48px;
+    font-weight: initial;
+  }
 }
 .footerCaption {
-    display: flex;
-    flex-flow: column;
-    color: $white;
-    padding: 19.5rem 0 0 0; 
-    h5 {
-        font-family: $lato;
-    }
+  display: flex;
+  flex-flow: column;
+  color: $white;
+  padding: 19.5rem 0 0 0;
+  h5 {
+    font-family: $lato;
+  }
 }
 .buttonContainer {
-    align-self: center;
-    display: flex;
-    flex-flow: row;
-    h4 {
-        font-family: $lato;
-        padding: 0 1rem 0 0;
+  align-self: center;
+  display: flex;
+  flex-flow: row;
+  h4 {
+    font-family: $lato;
+    padding: 0 1rem 0 0;
+  }
+  button {
+    border-radius: 45px;
+    min-width: 45px;
+    min-height: 45px;
+    background-color: $orange;
+    mix-blend-mode: color-dodge;
+    padding: 0;
+    span {
+      width: 100%;
+      height: 100%;
+      img {
+        transform: rotate(90deg);
+        width: 60%;
+        height: 25%;
+      }
     }
-    button {
-        border-radius: 45px;
-        min-width: 45px;
-        min-height: 45px;
-        background-color: $orange;
-        mix-blend-mode: color-dodge;
-    }
+  }
 }
