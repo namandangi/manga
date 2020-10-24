@@ -1,0 +1,195 @@
+$sea-green: #00b19a;
+$lighter-gray: #b1b1b1;
+$light-gray: #e5e5e5;
+$gray: #d4d4d4;
+$dark-gray: #888888;
+$darker-gray: #c4c4c4;
+$white: #ffffff;
+$black: #000000;
+
+.contentBody {
+}
+.contentHero {
+  min-height: 280px;
+  background-color: $sea-green;
+}
+.content {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $darker-gray;
+}
+.chapterCard {
+  height: auto;
+  width: 650px;
+  border: 1px solid $gray;
+  transform: translateY(-6rem);
+  background-color: $white;
+}
+.cardHeader {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: end;
+  h4 {
+    margin: 0 5rem 0 12.5rem;
+  }
+  button {
+    width: 120px;
+    min-width: 0;
+    padding: 0;
+    margin: 0 0 0 2.5rem;
+    height: 35px;
+    border-radius: 35px;
+    justify-content: flex-start;
+  }
+}
+.cardBody {
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+}
+.imgHolder {
+  width: 25%;
+  align-self: center;
+  img {
+    width: 110px;
+    height: 150px;
+  }
+}
+.info {
+  width: 75%;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  h6 {
+    margin: 0 0 0 5rem;
+  }
+}
+.infoContainer {
+  display: flex;
+  flex-flow: row;
+  hr {
+    margin: 0 30px;
+    height: 50%;
+  }
+  button {
+    width: 120px;
+    height: 35px;
+    border-radius: 25px;
+    color: $white;
+    background-color: $black;
+    margin: 1rem 0;
+    text-transform: capitalize;
+  }
+}
+.rating {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  span {
+    margin: 0 5px 0 0;
+    text-transform: capitalize;
+  }
+  p {
+    font-size: 12px;
+  }
+  img {
+    width: 15px;
+    height: 15px;
+    margin: 0 5px 0 0;
+  }
+}
+.genre {
+  display: flex;
+  flex-flow: row;
+  align-items: baseline;
+  p {
+    text-transform: capitalize;
+    text-align: left;
+    font-size: 12px;
+    overflow: auto;
+    max-width: 120px;
+  }
+  span {
+    margin: 0 5px 0 0;
+    text-transform: capitalize;
+  }
+}
+.release {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  p {
+    font-size: 12px;
+  }
+  span {
+    margin: 0 5px 0 0;
+    text-transform: capitalize;
+  }
+}
+.status {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  p {
+    font-size: 12px;
+  }
+  span {
+    margin: 0 5px 0 0;
+    text-transform: capitalize;
+  }
+}
+.chapterList {
+  display: flex;
+  flex-flow: column;
+  width: 650px;
+  background-color: $light-gray;
+  transform: translateY(-6rem);
+  span {
+    font-size: 14px;
+    text-transform: capitalize;
+  }
+  hr {
+    background-color: $dark-gray;
+  }
+  a {
+    color: $black;
+  }
+}
+.chapter {
+  display: flex;
+  flex-flow: row;
+}
+.chapter:last-of-type {
+  padding-bottom: 1rem;
+}
+.chapterLeft {
+  display: flex;
+  flex-flow: row;
+  width: 50%;
+  text-align: left;
+  img {
+    width: 15px;
+    height: 15px;
+    margin: 0.7rem 0.7rem 0 2rem;
+  }
+}
+.chapterRight {
+  width: 50%;
+  text-align: right;
+  margin: 0 1rem;
+  color: $lighter-gray;
+}
+.readmoreBtn button {
+  width: 25px;
+  min-width: 0;
+  padding: 0;
+  height: 25px;
+  border-radius: 25px;
+  background-color: $gray;
+  position: absolute;
+  transform: translateY(-0.75rem);
+}
