@@ -1,0 +1,87 @@
+$black: #000;
+$white: #ffffff;
+$grey: #c4c4c4;
+
+.chapterHeader {
+  display: flex;
+  flex-flow: row;
+  background-color: $black;
+}
+.leftChapterHeader {
+  width: 33%;
+  padding: 0 0 0 1rem;
+  display: flex;
+  flex-flow: row;
+  a {
+    color: $white;
+  }
+  h6 {
+    padding: 0.5rem 0.5rem;
+    color: $white;
+    font-weight: lighter;
+  }
+}
+.middleChapterHeader {
+  width: 33%;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  h6 {
+    color: $white;
+    padding: 0 1rem;
+  }
+  button {
+    width: 25px;
+    min-width: 0;
+    padding: 0;
+    height: 25px;
+    border-radius: 25px;
+    background-color: $grey;
+    .prev {
+      transform: rotate(90deg);
+    }
+    .next {
+      transform: rotate(-90deg);
+    }
+  }
+}
+.rightChapterHeader {
+  width: 33%;
+  padding: 0 1rem 0 0;
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  align-items: center;
+  button {
+    width: 25px;
+    min-width: 0;
+    padding: 0;
+    margin: 0 0.25rem;
+    height: 25px;
+    border-radius: 25px;
+    background-color: $grey;
+    span {
+      height: 100%;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .subscribeBtn {
+    width: 6rem;
+    span {
+      text-transform: capitalize;
+      margin: 0 0.2rem 0 0;
+    }
+  }
+}
+.chapterContent {
+  display: flex;
+  flex-flow: column;
+  margin: 0% 24%;
+  img:last-child {
+    padding: 0 0 2rem 0;
+    border-bottom: 1px solid $grey;
+  }
+}
