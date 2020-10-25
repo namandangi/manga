@@ -59,7 +59,10 @@ $off-white: #ede6e6;
     }
   }
 }
-.rating {
+.innerRating {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
   padding: 0.2rem 0 0 1rem;
   img {
     width: 13px;
