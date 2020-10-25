@@ -45,7 +45,13 @@ exports.getMangas = async (req, res) => {
       await newManga.save();
     }
   });
-  res.render('home.ejs', { list: mangaList });
+  res.status(200).json(mangaList);
+};
+
+exports.getMangaDetail = async (req, res) => {
+  const { id } = req.params;
+  const doc = await Manga.findOne({ _id: id });
+  res.status(200).json(doc);
 };
 
 exports.getMangaByName = async (req, res) => {
@@ -147,18 +153,17 @@ exports.getMangaByName = async (req, res) => {
       );
     }
   });
-  res.render('chapters', { mangaName, allChaps: chapterList });
+  res.status(200).json({ chapterList });
 };
 
 exports.getMangaChapter = async (req, res) => {
   let mangaChapterUrl;
-  let mangaName;
+  let chap;
   let chapterImgUrl;
   const imgs = [];
   const { name, id } = req.params;
   const doc = await Manga.findOne({ name }).populate('chapter').exec();
   if (doc) {
-    mangaName = doc.title;
     mangaChapterUrl = doc.chapter[id].chapterUrl;
     chapterImgUrl = doc.chapter[id].chapterImgUrl;
   }
@@ -170,17 +175,13 @@ exports.getMangaChapter = async (req, res) => {
     });
   });
   if (chapterImgUrl.length !== imgs.length) {
-    await Chapter.update(
+    chap = await Chapter.findOneAndUpdate(
       { mangaName: doc._id },
-      { chapterImgUrl: imgs },
+      { chapterImgUrl: imgs, chapterId: id },
       { new: true }
     );
   }
-  res.render('index', {
-    images: imgs,
-    name: mangaName,
-    number: id,
-  });
+  res.status(200).json(chap);
 };
 
 exports.searchManga = async (req, res) => {
@@ -203,7 +204,7 @@ exports.searchManga = async (req, res) => {
         name: mangaName,
         rating: $(manga).find('.score').text(),
         mangaUrl: $(manga).find('.tab-thumb > a').attr('href'),
-        imgurl: $(manga).find('.tab-thumb > a > img').attr('src'),
+        imgUrl: $(manga).find('.tab-thumb > a > img').attr('src'),
       };
       console.log(mangaList[i]);
     });
@@ -220,16 +221,16 @@ exports.searchManga = async (req, res) => {
       await newManga.save();
     }
   });
-  res.render('search', { list: mangaList });
+  res.status(200).json(mangaList);
 };
 
 exports.getByTag = async (req, res) => {
   const mangaList = [];
-  const { tag } = req.params;
+  const { name } = req.params;
   const queries = req.query;
   const limit = queries === undefined ? 10 : Number(queries.limit);
   const { data } = await axios.get(
-    `https://kissmanga.link/all-manga/?m_orderby=${tag}`
+    `https://kissmanga.link/all-manga/?m_orderby=${name}`
   );
   const $ = cheerio.load(data);
   $('.page-item-detail').each((id, manga) => {
@@ -286,5 +287,5 @@ exports.getByTag = async (req, res) => {
       await newManga.save();
     }
   });
-  res.render('viewByTags', { list: mangaList });
+  res.status(200).json(mangaList);
 };
