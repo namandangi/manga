@@ -1,4 +1,9 @@
-import React from 'react';
+import React, {
+  FunctionComponent,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import { Header, Footer } from './partial';
 import '../styles/mangaChapterList.scss';
 import { Typography, Paper, Button, Link, Divider } from '@material-ui/core';
@@ -8,7 +13,48 @@ import ratingIcon from '../static/rating-icon.png';
 import likeIcon from '../static/like-icon.png';
 import readmoreIcon from '../static/readmore-icon.png';
 
-function MangaChapterList() {
+function MangaChapterList(props: any) {
+  interface Chapter {
+    chapterId: Number;
+    mangaName: String;
+    chapterTitle: String;
+    chapterUrl: String;
+    postedAt: String;
+  }
+  interface Details {
+    title: String;
+    author: String;
+    rating: Number;
+    release: String;
+    status: String;
+    genre: String[];
+    imgUrl: string;
+  }
+
+  const [data, setData] = useState([]);
+  const [details, setDetails] = useState({});
+
+  const getMangaChapterList = useCallback(async () => {
+    try {
+      const chapterDoc = await fetch(`/mangas/read/${props.match.params.name}`);
+      const chapterResponse = await chapterDoc.json();
+      const mangaDoc = await fetch(
+        `/mangas/details/${chapterResponse.chapterList[0].mangaName}`
+      );
+      const mangaResponse = await mangaDoc.json();
+      setData(chapterResponse.chapterList);
+      setDetails(mangaResponse);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+  useEffect(() => {
+    getMangaChapterList();
+  }, [setData]);
+  console.log(data);
+  console.log(details);
+  console.log(props.match.params.name);
+
   return (
     <>
       <Header />
@@ -18,7 +64,9 @@ function MangaChapterList() {
           <div className="chapterCard">
             <div className="cardHeader">
               <div className="title">
-                <Typography variant="h4">The Gamer</Typography>
+                <Typography variant="h4">
+                  {(details as Details).title}
+                </Typography>
               </div>
               <Button variant="outlined">
                 <img
@@ -31,21 +79,25 @@ function MangaChapterList() {
             </div>
             <div className="cardBody">
               <div className="imgHolder">
-                <img src={gamerIcon} alt="chapter-img" />
+                <img src={(details as Details).imgUrl} alt="chapter-img" />
               </div>
               <div className="info">
-                <Typography variant="subtitle1">Sangyoung Seong</Typography>
+                <Typography variant="subtitle1">
+                  {(details as Details).author}
+                </Typography>
                 <div className="infoContainer">
                   <div className="infoLeft">
                     <div className="rating">
                       <Typography variant="overline">Rating:</Typography>
                       <img src={ratingIcon} alt="rating" />
-                      <Typography variant="body1">4.5</Typography>
+                      <Typography variant="body1">
+                        {(details as Details).rating}
+                      </Typography>
                     </div>
                     <div className="genre">
                       <Typography variant="overline">Genres:</Typography>
                       <Typography variant="body1">
-                        Action, Adventure, Comedy, Fantasy, Manhwa, Shounen
+                        {(details as Details).genre}
                       </Typography>
                     </div>
                     <Button variant="contained">Read First</Button>
@@ -54,11 +106,15 @@ function MangaChapterList() {
                   <div className="infoRight">
                     <div className="release">
                       <Typography variant="overline">Release:</Typography>
-                      <Typography variant="body1">2013</Typography>
+                      <Typography variant="body1">
+                        {(details as Details).release}
+                      </Typography>
                     </div>
                     <div className="status">
                       <Typography variant="overline">Status:</Typography>
-                      <Typography variant="body1">OnGoing</Typography>
+                      <Typography variant="body1">
+                        {(details as Details).status}
+                      </Typography>
                     </div>
                   </div>
                 </div>
@@ -66,125 +122,28 @@ function MangaChapterList() {
             </div>
           </div>
           <div className="chapterList">
-            <div className="chapter">
-              <div className="chapterLeft">
-                <img src={likeIcon} alt="like" />
-                <Typography variant="overline">
-                  <Link href="#">Chapter 320</Link>
-                </Typography>
-              </div>
-              <div className="chapterRight">
-                <Typography variant="overline">October 24, 2020</Typography>
-              </div>
-            </div>
-            <Divider variant="middle" />
-            <div className="chapter">
-              <div className="chapterLeft">
-                <img src={likeIcon} alt="like" />
-                <Typography variant="overline">
-                  <Link href="#">Chapter 319</Link>
-                </Typography>
-              </div>
-              <div className="chapterRight">
-                <Typography variant="overline">October 24, 2020</Typography>
-              </div>
-            </div>
-            <Divider variant="middle" />
-            <div className="chapter">
-              <div className="chapterLeft">
-                <img src={likeIcon} alt="like" />
-                <Typography variant="overline">
-                  <Link href="#">Chapter 318</Link>
-                </Typography>
-              </div>
-              <div className="chapterRight">
-                <Typography variant="overline">October 24, 2020</Typography>
-              </div>
-            </div>
-            <Divider variant="middle" />
-            <div className="chapter">
-              <div className="chapterLeft">
-                <img src={likeIcon} alt="like" />
-                <Typography variant="overline">
-                  <Link href="#">Chapter 317</Link>
-                </Typography>
-              </div>
-              <div className="chapterRight">
-                <Typography variant="overline">October 24, 2020</Typography>
-              </div>
-            </div>
-            <Divider variant="middle" />
-            <div className="chapter">
-              <div className="chapterLeft">
-                <img src={likeIcon} alt="like" />
-                <Typography variant="overline">
-                  <Link href="#">Chapter 316</Link>
-                </Typography>
-              </div>
-              <div className="chapterRight">
-                <Typography variant="overline">October 24, 2020</Typography>
-              </div>
-            </div>
-            <Divider variant="middle" />
-            <div className="chapter">
-              <div className="chapterLeft">
-                <img src={likeIcon} alt="like" />
-                <Typography variant="overline">
-                  <Link href="#">Chapter 315</Link>
-                </Typography>
-              </div>
-              <div className="chapterRight">
-                <Typography variant="overline">October 24, 2020</Typography>
-              </div>
-            </div>
-            <Divider variant="middle" />
-            <div className="chapter">
-              <div className="chapterLeft">
-                <img src={likeIcon} alt="like" />
-                <Typography variant="overline">
-                  <Link href="#">Chapter 314</Link>
-                </Typography>
-              </div>
-              <div className="chapterRight">
-                <Typography variant="overline">October 24, 2020</Typography>
-              </div>
-            </div>
-            <Divider variant="middle" />
-            <div className="chapter">
-              <div className="chapterLeft">
-                <img src={likeIcon} alt="like" />
-                <Typography variant="overline">
-                  <Link href="#">Chapter 313</Link>
-                </Typography>
-              </div>
-              <div className="chapterRight">
-                <Typography variant="overline">October 24, 2020</Typography>
-              </div>
-            </div>
-            <Divider variant="middle" />
-            <div className="chapter">
-              <div className="chapterLeft">
-                <img src={likeIcon} alt="like" />
-                <Typography variant="overline">
-                  <Link href="#">Chapter 312</Link>
-                </Typography>
-              </div>
-              <div className="chapterRight">
-                <Typography variant="overline">October 24, 2020</Typography>
-              </div>
-            </div>
-            <Divider variant="middle" />
-            <div className="chapter">
-              <div className="chapterLeft">
-                <img src={likeIcon} alt="like" />
-                <Typography variant="overline">
-                  <Link href="#">Chapter 311</Link>
-                </Typography>
-              </div>
-              <div className="chapterRight">
-                <Typography variant="overline">October 24, 2020</Typography>
-              </div>
-            </div>
+            {data.map((chapter: Chapter) => (
+              <>
+                <div className="chapter">
+                  <div className="chapterLeft">
+                    <img src={likeIcon} alt="like" />
+                    <Typography variant="overline">
+                      <Link
+                        href={`/mangas/read/${props.match.params.name}/${chapter.chapterId}`}
+                      >
+                        {chapter.chapterTitle}
+                      </Link>
+                    </Typography>
+                  </div>
+                  <div className="chapterRight">
+                    <Typography variant="overline">
+                      {chapter.postedAt}
+                    </Typography>
+                  </div>
+                </div>
+                <Divider variant="middle" />
+              </>
+            ))}
             <div className="readmoreBtn">
               <Button variant="outlined">
                 <img src={readmoreIcon} alt="read-more" />
