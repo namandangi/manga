@@ -1,19 +1,11 @@
 import React from 'react';
-import Home from './components/home';
-import MangaList from './components/mangaList';
-import MangaChapter from './components/mangaChapter';
-import MangaChapterList from './components/mangaChapterList';
+import RootRouter from './components/router/router';
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <div className="App">
-        {/* <Home /> */}
-        {/* <MangaList /> */}
-        {/* <MangaChapter /> */}
-        <MangaChapterList />
-      </div>
+      <RootRouter />
     </div>
   );
 }

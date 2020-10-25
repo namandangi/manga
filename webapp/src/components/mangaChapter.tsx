@@ -1,14 +1,37 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Footer } from '../components/partial';
 import '../styles/mangaChapter.scss';
 import { Typography, Button, Link } from '@material-ui/core';
 import arrowIcon from '../static/readmore-icon.png';
 import likeIcon from '../static/like-icon.png';
 import subscribeIcon from '../static/add-icon.png';
-import manga1 from '../static/manga1.jpg';
-import manga2 from '../static/manga2.jpg';
+function MangaChapter(props: any) {
+  interface Chapter {
+    chapterImgUrl: string[];
+    chapterId: Number;
+    chapterTitle: String;
+  }
+  interface Images {}
 
-function MangaChapter() {
+  const [data, setData] = useState({});
+  const [imgs, setImgs] = useState([]);
+  const getMangaChapter = useCallback(async () => {
+    try {
+      const doc = await fetch(
+        `/mangas/read/${props.match.params.name}/${props.match.params.id}`
+      );
+      const response = await doc.json();
+      setData(response);
+      setImgs(response.chapterImgUrl);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+  useEffect(() => {
+    getMangaChapter();
+  }, [setData]);
+  console.log(data);
+  console.log(imgs);
   return (
     <>
       <div className="chapterHeader">
@@ -16,13 +39,15 @@ function MangaChapter() {
           <Typography variant="h6">
             <Link href="#">The God of High School</Link> &nbsp; {'>'}
           </Typography>
-          <Typography variant="h6">Chapter 128</Typography>
+          <Typography variant="h6">{(data as Chapter).chapterTitle}</Typography>
         </div>
         <div className="middleChapterHeader">
           <Button variant="contained">
-            <img className="prev" src={arrowIcon} alt="next-chapter" />
+            <img className="prev" src={arrowIcon} alt="prev-chapter" />
           </Button>
-          <Typography variant="h6">{'#'} 128</Typography>
+          <Typography variant="h6">
+            {'#'} {(data as Chapter).chapterId}
+          </Typography>
           <Button variant="contained">
             <img className="next" src={arrowIcon} alt="next-chapter" />
           </Button>
@@ -42,8 +67,9 @@ function MangaChapter() {
         </div>
       </div>
       <div className="chapterContent">
-        <img src={manga1} />
-        <img src={manga2} />
+        {imgs.map((img: string) => (
+          <img src={img} />
+        ))}
       </div>
       <Footer />
     </>

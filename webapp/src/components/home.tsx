@@ -8,20 +8,22 @@ function Home() {
     <div className="root">
       <div className="nav">
         <div className="highRated">
-          <Link href="#">HIGH - RATED</Link>
+          <Link href="/mangas/tag/rating">TOP</Link>
         </div>
         <div className="mostViewed">
-          <Link href="#">MOST - VIEWED</Link>
+          <Link href="/mangas/tag/trending">TRENDING</Link>
         </div>
         <div className="trending">
-          <Link href="#">TRENDING</Link>
+          <Link href="/mangas/tag/views">POPULAR</Link>
         </div>
         <div className="button">
           <Button variant="contained">LOGIN</Button>
         </div>
       </div>
       <div className="title">
-        <Typography variant="h1">MANGA!</Typography>
+        <Link href="/mangas">
+          <Typography variant="h1">MANGA!</Typography>
+        </Link>
       </div>
       <div className="bodyCaption">
         <Typography variant="h1">読んで、私の兵士</Typography>
