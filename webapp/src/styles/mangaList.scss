@@ -42,9 +42,31 @@ $off-white: #ede6e6;
   flex-flow: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  div {
-    width: 210px;
-    height: 210px;
+  a:hover {
+    text-decoration: none;
+  }
+  .paper {
+    width: 150px;
+    height: 150px;
     margin: 0.5rem 0.5rem;
+    p {
+      text-align: left;
+      padding: 0.5rem 0.5rem 0 1rem;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 18px;
+      color: #ff0f0f;
+    }
+  }
+}
+.rating {
+  padding: 0.2rem 0 0 1rem;
+  img {
+    width: 13px;
+    height: 11px;
+  }
+  h6 {
+    font-size: 14px;
+    line-height: 17px;
   }
 }
