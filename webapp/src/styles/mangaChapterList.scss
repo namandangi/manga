@@ -74,8 +74,9 @@ $black: #000000;
 .infoContainer {
   display: flex;
   flex-flow: row;
+  width: 100%;
   hr {
-    margin: 0 30px;
+    margin: 0 10px;
     height: 50%;
   }
   button {
@@ -87,6 +88,12 @@ $black: #000000;
     margin: 1rem 0;
     text-transform: capitalize;
   }
+}
+.infoLeft {
+  width: 50%;
+}
+.infoRight {
+  width: 50%;
 }
 .rating {
   display: flex;
@@ -115,12 +122,16 @@ $black: #000000;
     text-align: left;
     font-size: 12px;
     overflow: auto;
-    max-width: 120px;
   }
   span {
     margin: 0 5px 0 0;
     text-transform: capitalize;
   }
+}
+.genreList {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
 }
 .release {
   display: flex;
@@ -173,16 +184,19 @@ $black: #000000;
 .chapterLeft {
   display: flex;
   flex-flow: row;
-  width: 50%;
+  width: 70%;
   text-align: left;
   img {
     width: 15px;
     height: 15px;
     margin: 0.7rem 0.7rem 0 2rem;
   }
+  a:hover {
+    text-decoration: none;
+  }
 }
 .chapterRight {
-  width: 50%;
+  width: 30%;
   text-align: right;
   margin: 0 1rem;
   color: $lighter-gray;

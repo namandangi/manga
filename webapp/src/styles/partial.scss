@@ -1,4 +1,5 @@
 $light-grey: #ede6e6;
+$grey: grey;
 
 .header {
   display: flex;
@@ -12,6 +13,9 @@ $light-grey: #ede6e6;
   align-items: center;
   a {
     color: black;
+  }
+  a:hover {
+    text-decoration: none;
   }
   h5 {
     padding: 0rem 1rem;
@@ -45,11 +49,24 @@ $light-grey: #ede6e6;
     min-width: 0;
     border-color: $light-grey;
   }
+  input {
+    height: 35px;
+    border-radius: 35px;
+    padding-left: 0.75rem;
+    border-color: $grey;
+  }
   hr {
     width: 1.2px;
     height: 70%;
     align-self: center;
     margin: 0 0.2rem;
+  }
+}
+.rightHeaderSearch {
+  input:focus {
+    .rightHeader {
+      display: none;
+    }
   }
 }
 .footer {
@@ -79,6 +96,9 @@ $light-grey: #ede6e6;
     text-transform: capitalize;
     a {
       color: black;
+    }
+    a:hover {
+      text-decoration: none;
     }
   }
   hr {

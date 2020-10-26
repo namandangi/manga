@@ -1,6 +1,15 @@
 $sea-green: #00b19a;
 $grey: #f3f3f3;
+$white: #ffffff;
 $off-white: #ede6e6;
+$pink: #fd337f;
+$yellow: #eea800;
+$green: #9ab710;
+$blue: #1ba8f2;
+$red: #c00355;
+$purple: #7a41e9;
+
+$colorList: $yellow, $green, $blue, $red, $purple, $pink, $sea-green;
 
 .contentBody {
   display: flex;
@@ -46,19 +55,39 @@ $off-white: #ede6e6;
     text-decoration: none;
   }
   .paper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 150px;
-    height: 150px;
+    height: 200px;
     margin: 0.5rem 0.5rem;
     p {
       text-align: left;
       padding: 0.5rem 0.5rem 0 1rem;
       font-size: 16px;
-      font-weight: 900;
+      font-weight: 400;
       line-height: 18px;
-      color: #ff0f0f;
+      color: $white;
     }
   }
 }
+.backCard {
+  display: none;
+}
+.paper:hover {
+  .frontCard {
+    display: none;
+  }
+  .backCard {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    background-color: nth($colorList, random(6));
+  }
+}
+
 .innerRating {
   display: flex;
   flex-flow: row;
@@ -71,5 +100,6 @@ $off-white: #ede6e6;
   h6 {
     font-size: 14px;
     line-height: 17px;
+    color: $off-white;
   }
 }

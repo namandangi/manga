@@ -50,7 +50,9 @@ exports.getMangas = async (req, res) => {
 
 exports.getMangaDetail = async (req, res) => {
   const { id } = req.params;
-  const doc = await Manga.findOne({ _id: id });
+  const doc = await Manga.findOne({ _id: id })
+    .populate({ path: 'chapter', options: { sort: { chapterId: 1 } } })
+    .exec();
   res.status(200).json(doc);
 };
 
@@ -139,17 +141,19 @@ exports.getMangaByName = async (req, res) => {
       chapterUrl: selector(manga).find('a').attr('href'),
       postedAt: $(manga).find('.chapter-release-date > i').text(),
     };
-    console.log(chapterList[i]);
   });
   await Manga.update({ name: mangaName }, mangaDetail, { new: true });
+  chapterList.sort((a, b) => parseFloat(a.chapterId) - parseFloat(b.chapterId));
+  console.log(chapterList);
   chapterList.forEach(async (chapter) => {
     const obj = await Chapter.findOne({ chapterTitle: chapter.chapterTitle });
     if (!obj) {
       const chapterObj = new Chapter(chapter);
       await chapterObj.save();
-      await Manga.update(
+      await Manga.findOneAndUpdate(
         { name: mangaName },
-        { $push: { chapter: chapterObj._id } }
+        { $push: { chapter: chapterObj._id } },
+        { new: true }
       );
     }
   });
@@ -160,12 +164,16 @@ exports.getMangaChapter = async (req, res) => {
   let mangaChapterUrl;
   let chap;
   let chapterImgUrl;
+  let chapterTitle;
   const imgs = [];
   const { name, id } = req.params;
-  const doc = await Manga.findOne({ name }).populate('chapter').exec();
+  const doc = await Manga.findOne({ name })
+    .populate({ path: 'chapter', options: { sort: { chapterId: 1 } } })
+    .exec();
   if (doc) {
     mangaChapterUrl = doc.chapter[id].chapterUrl;
     chapterImgUrl = doc.chapter[id].chapterImgUrl;
+    chapterTitle = doc.chapter[id].chapterTitle;
   }
 
   await axios.get(mangaChapterUrl).then((response) => {
@@ -176,11 +184,12 @@ exports.getMangaChapter = async (req, res) => {
   });
   if (chapterImgUrl.length !== imgs.length) {
     chap = await Chapter.findOneAndUpdate(
-      { mangaName: doc._id },
-      { chapterImgUrl: imgs, chapterId: id },
-      { new: true }
+      { mangaName: doc._id, chapterTitle },
+      { chapterImgUrl: imgs },
+      { new: true, sort: { chapterId: 1 } }
     );
   }
+  console.log(chap);
   res.status(200).json(chap);
 };
 
