@@ -23,6 +23,7 @@ function MangaChapterList(props: any) {
   }
   interface Details {
     title: String;
+    name: String;
     author: String;
     rating: Number;
     release: String;
@@ -33,6 +34,7 @@ function MangaChapterList(props: any) {
 
   const [data, setData] = useState([]);
   const [details, setDetails] = useState({});
+  const [count, setCount] = useState(10);
 
   const getMangaChapterList = useCallback(async () => {
     try {
@@ -48,12 +50,17 @@ function MangaChapterList(props: any) {
       console.log(err);
     }
   }, []);
+
+  const handleReadMore = () => {
+    setCount(count + 10);
+  };
+
   useEffect(() => {
     getMangaChapterList();
   }, [setData]);
   console.log(data);
   console.log(details);
-  console.log(props.match.params.name);
+  console.log(count);
 
   return (
     <>
@@ -100,7 +107,14 @@ function MangaChapterList(props: any) {
                         {(details as Details).genre}
                       </Typography>
                     </div>
-                    <Button variant="contained">Read First</Button>
+                    <Link
+                      href={`/mangas/read/${(details as Details).name}/${
+                        data.length > 0 &&
+                        (data[data.length - 1] as Chapter).chapterId
+                      }`}
+                    >
+                      <Button variant="contained">Read First</Button>
+                    </Link>
                   </div>
                   <Divider orientation="vertical" flexItem />
                   <div className="infoRight">
@@ -122,7 +136,7 @@ function MangaChapterList(props: any) {
             </div>
           </div>
           <div className="chapterList">
-            {data.map((chapter: Chapter) => (
+            {data.slice(0, count).map((chapter: Chapter) => (
               <>
                 <div className="chapter">
                   <div className="chapterLeft">
@@ -145,7 +159,7 @@ function MangaChapterList(props: any) {
               </>
             ))}
             <div className="readmoreBtn">
-              <Button variant="outlined">
+              <Button variant="outlined" onClick={handleReadMore}>
                 <img src={readmoreIcon} alt="read-more" />
               </Button>
             </div>

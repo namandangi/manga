@@ -228,7 +228,7 @@ exports.getByTag = async (req, res) => {
   const mangaList = [];
   const { name } = req.params;
   const queries = req.query;
-  const limit = queries === undefined ? 10 : Number(queries.limit);
+  const limit = queries === undefined ? 50 : Number(queries.limit);
   const { data } = await axios.get(
     `https://kissmanga.link/all-manga/?m_orderby=${name}`
   );

@@ -14,18 +14,20 @@ function MangaList(props: any) {
     mangaUrl: String;
     imgUrl: string;
   }
-  interface LinkProps {
-    to: String;
-    query: Object;
-  }
 
   const [data, setData] = useState([]);
+  const [count, setCount] = useState(10);
+  const [limit, setLimit] = useState(50);
 
   const getMangaList = useCallback(async () => {
     try {
-      const { pathname, search } = props.location;
+      let { pathname, search } = props.location;
+      search = !pathname.includes('tag') ? search : search + `?limit=${limit}`;
+      if (limit == count) {
+        setLimit(limit + 50);
+      }
       const searchUrl = pathname + search;
-      console.log(searchUrl);
+      console.log(searchUrl, limit);
       const doc = await fetch(searchUrl);
       const response = await doc.json();
       setData(response);
@@ -33,11 +35,24 @@ function MangaList(props: any) {
       console.log(err);
     }
   }, []);
+
+  const resetLimit = useCallback(async () => {
+    if (limit == count) {
+      setLimit(limit + 50);
+      // getMangaList();
+    }
+  }, []);
+
+  const handleReadMore = () => {
+    setCount(count + 10);
+  };
+
   useEffect(() => {
     getMangaList();
-  }, [setData]);
+    resetLimit();
+  }, [setData, limit]);
   console.log(data);
-  console.log(props);
+  console.log(count, limit);
 
   return (
     <>
@@ -52,7 +67,7 @@ function MangaList(props: any) {
             </Link>
           </div>
           <div className="manga">
-            {data.map((manga: Manga) => (
+            {data.slice(0, count).map((manga: Manga) => (
               <Link href={`/mangas/read/${manga.name}`}>
                 <Paper
                   className="paper"
@@ -64,7 +79,7 @@ function MangaList(props: any) {
                   square
                 >
                   <Typography variant="body1">{manga.title}</Typography>
-                  <div className="rating">
+                  <div className="innerRating">
                     <img src={ratingIcon} />
                     <Typography variant="subtitle1">{manga.rating}</Typography>
                   </div>
@@ -72,10 +87,12 @@ function MangaList(props: any) {
               </Link>
             ))}
           </div>
-          <Button className="btmReadmoreBtn" variant="contained">
-            <Link href="#">
-              <img src={readmoreIcon} alt="read-more" />
-            </Link>
+          <Button
+            className="btmReadmoreBtn"
+            variant="contained"
+            onClick={handleReadMore}
+          >
+            <img src={readmoreIcon} alt="read-more" />
           </Button>
         </div>
       </div>
