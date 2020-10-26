@@ -69,19 +69,21 @@ function MangaList(props: any) {
           <div className="manga">
             {data.slice(0, count).map((manga: Manga) => (
               <Link href={`/mangas/read/${manga.name}`}>
-                <Paper
-                  className="paper"
-                  style={{
-                    backgroundImage: `url(${manga.imgUrl})`,
-                    backgroundSize: 'cover',
-                  }}
-                  variant="outlined"
-                  square
-                >
-                  <Typography variant="body1">{manga.title}</Typography>
-                  <div className="innerRating">
-                    <img src={ratingIcon} />
-                    <Typography variant="subtitle1">{manga.rating}</Typography>
+                <Paper className="paper" variant="outlined" square>
+                  <div className="frontCard">
+                    <img
+                      src={manga.imgUrl}
+                      style={{ width: '130px', height: '180px' }}
+                    />
+                  </div>
+                  <div className="backCard">
+                    <Typography variant="body1">{manga.title}</Typography>
+                    <div className="innerRating">
+                      <img src={ratingIcon} />
+                      <Typography variant="subtitle1">
+                        {manga.rating}
+                      </Typography>
+                    </div>
                   </div>
                 </Paper>
               </Link>

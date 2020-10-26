@@ -1,16 +1,10 @@
-import React, {
-  FunctionComponent,
-  useState,
-  useEffect,
-  useCallback,
-} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Header, Footer } from './partial';
 import '../styles/mangaChapterList.scss';
-import { Typography, Paper, Button, Link, Divider } from '@material-ui/core';
+import { Typography, Button, Link, Divider } from '@material-ui/core';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import subscribeIcon from '../static/add-icon.png';
-import gamerIcon from '../static/gamer.jpg';
 import ratingIcon from '../static/rating-icon.png';
 import likeIcon from '../static/like-icon.png';
 import readmoreIcon from '../static/readmore-icon.png';
@@ -82,10 +76,7 @@ function MangaChapterList(props: any) {
   useEffect(() => {
     getMangaChapterList();
   }, [setData]);
-  console.log(data);
-  console.log(details);
-  console.log(count);
-  console.log(token);
+  console.log('token: ', token);
 
   return (
     <>
@@ -128,9 +119,12 @@ function MangaChapterList(props: any) {
                     </div>
                     <div className="genre">
                       <Typography variant="overline">Genres:</Typography>
-                      <Typography variant="body1">
-                        {(details as Details).genre}
-                      </Typography>
+                      <div className="genreList">
+                        {(details as Details).genre &&
+                          (details as Details).genre.map((el: String) => (
+                            <Typography variant="body1">{el} &nbsp;</Typography>
+                          ))}
+                      </div>
                     </div>
                     <Link
                       href={`/mangas/read/${(details as Details).name}/${
