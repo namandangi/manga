@@ -8,7 +8,7 @@ $grey: #c4c4c4;
   background-color: $black;
 }
 .leftChapterHeader {
-  width: 33%;
+  width: 45%;
   padding: 0 0 0 1rem;
   display: flex;
   flex-flow: row;
@@ -22,10 +22,10 @@ $grey: #c4c4c4;
   }
 }
 .middleChapterHeader {
-  width: 33%;
+  width: 25%;
   display: flex;
   flex-flow: row;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   h6 {
     color: $white;
@@ -47,7 +47,7 @@ $grey: #c4c4c4;
   }
 }
 .rightChapterHeader {
-  width: 33%;
+  width: 30%;
   padding: 0 1rem 0 0;
   display: flex;
   flex-flow: row;

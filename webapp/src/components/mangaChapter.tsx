@@ -11,10 +11,20 @@ function MangaChapter(props: any) {
     chapterId: Number;
     chapterTitle: String;
   }
-  interface Images {}
+  interface Details {
+    title: String;
+    name: String;
+    author: String;
+    rating: Number;
+    release: String;
+    status: String;
+    genre: String[];
+    imgUrl: string;
+  }
 
   const [data, setData] = useState({});
   const [imgs, setImgs] = useState([]);
+  const [details, setDetails] = useState({});
   const getMangaChapter = useCallback(async () => {
     try {
       const doc = await fetch(
@@ -23,34 +33,59 @@ function MangaChapter(props: any) {
       const response = await doc.json();
       setData(response);
       setImgs(response.chapterImgUrl);
+      const mangaDoc = await fetch(`/mangas/details/${response.mangaName}`);
+      const mangaResponse = await mangaDoc.json();
+      setDetails(mangaResponse);
     } catch (err) {
       console.log(err);
     }
   }, []);
+
+  const handleNextChapter = () => {
+    // <Redirect to={`/mangas/read/${props.match.params.name}/${Number(props.match.params.id)+1}`} />
+  };
+  const handlePrevChapter = () => {
+    // <Redirect to={`/mangas/read/${props.match.params.name}/${Number(props.match.params.id)-1}`} />
+  };
+
   useEffect(() => {
     getMangaChapter();
   }, [setData]);
   console.log(data);
   console.log(imgs);
+  console.log(details);
+  console.log(props);
   return (
     <>
       <div className="chapterHeader">
         <div className="leftChapterHeader">
           <Typography variant="h6">
-            <Link href="#">The God of High School</Link> &nbsp; {'>'}
+            <Link href="#">{(details as Details).title}</Link> &nbsp; {'>'}
           </Typography>
           <Typography variant="h6">{(data as Chapter).chapterTitle}</Typography>
         </div>
         <div className="middleChapterHeader">
-          <Button variant="contained">
-            <img className="prev" src={arrowIcon} alt="prev-chapter" />
-          </Button>
+          <Link
+            href={`/mangas/read/${props.match.params.name}/${
+              Number(props.match.params.id) - 1
+            }`}
+          >
+            <Button variant="contained" onClick={handlePrevChapter}>
+              <img className="prev" src={arrowIcon} alt="prev-chapter" />
+            </Button>
+          </Link>
           <Typography variant="h6">
             {'#'} {(data as Chapter).chapterId}
           </Typography>
-          <Button variant="contained">
-            <img className="next" src={arrowIcon} alt="next-chapter" />
-          </Button>
+          <Link
+            href={`/mangas/read/${props.match.params.name}/${
+              Number(props.match.params.id) + 1
+            }`}
+          >
+            <Button variant="contained" onClick={handleNextChapter}>
+              <img className="next" src={arrowIcon} alt="next-chapter" />
+            </Button>
+          </Link>
         </div>
         <div className="rightChapterHeader">
           <Button variant="contained">
