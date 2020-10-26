@@ -13,6 +13,9 @@ $light-grey: #ede6e6;
   a {
     color: black;
   }
+  a:hover {
+    text-decoration: none;
+  }
   h5 {
     padding: 0rem 1rem;
     font-size: 20px;
@@ -79,6 +82,9 @@ $light-grey: #ede6e6;
     text-transform: capitalize;
     a {
       color: black;
+    }
+    a:hover {
+      text-decoration: none;
     }
   }
   hr {

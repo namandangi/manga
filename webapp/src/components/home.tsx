@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link, Button, Typography } from '@material-ui/core';
-import arrow from '../static/arrow-icon.png';
+import readmoreIcon from '../static/readmore-icon.png';
 import '../styles/home.scss';
+import erwin_hero from '../static/erwin_hero_edited.png';
 
 function Home() {
   return (
     <div className="root">
+      <div className="backdrop">
+        <img src={erwin_hero} />
+      </div>
       <div className="nav">
         <div className="highRated">
           <Link href="/mangas/tag/rating">TOP</Link>
@@ -35,7 +39,7 @@ function Home() {
         <div className="buttonContainer">
           <Typography variant="h4">止まらない、バカヤロ</Typography>
           <Button variant="contained">
-            <img src={arrow} />
+            <img src={readmoreIcon} />
           </Button>
         </div>
         <Typography variant="h5">Tomaranai, bakayaro</Typography>
