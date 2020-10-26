@@ -7,6 +7,8 @@ import React, {
 import { Header, Footer } from './partial';
 import '../styles/mangaChapterList.scss';
 import { Typography, Paper, Button, Link, Divider } from '@material-ui/core';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 import subscribeIcon from '../static/add-icon.png';
 import gamerIcon from '../static/gamer.jpg';
 import ratingIcon from '../static/rating-icon.png';
@@ -35,6 +37,7 @@ function MangaChapterList(props: any) {
   const [data, setData] = useState([]);
   const [details, setDetails] = useState({});
   const [count, setCount] = useState(10);
+  const [token, setToken] = useState('');
 
   const getMangaChapterList = useCallback(async () => {
     try {
@@ -46,6 +49,8 @@ function MangaChapterList(props: any) {
       const mangaResponse = await mangaDoc.json();
       setData(chapterResponse.chapterList);
       setDetails(mangaResponse);
+      const isToken = !Cookies.get('token') ? null : Cookies.get('token');
+      setToken(isToken as string);
     } catch (err) {
       console.log(err);
     }
@@ -55,12 +60,32 @@ function MangaChapterList(props: any) {
     setCount(count + 10);
   };
 
+  const handleSubscribe = () => {
+    axios.post(
+      `/mangas/read/${props.match.params.name}/subscribe`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+  };
+  const handleLike = (id: any) => {
+    axios.post(
+      `/mangas/read/${props.match.params.name}/${id}/like`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+  };
+
   useEffect(() => {
     getMangaChapterList();
   }, [setData]);
   console.log(data);
   console.log(details);
   console.log(count);
+  console.log(token);
 
   return (
     <>
@@ -75,7 +100,7 @@ function MangaChapterList(props: any) {
                   {(details as Details).title}
                 </Typography>
               </div>
-              <Button variant="outlined">
+              <Button variant="outlined" onClick={handleSubscribe}>
                 <img
                   src={subscribeIcon}
                   style={{ width: '20px', height: '20px', paddingLeft: '5px' }}
@@ -140,7 +165,11 @@ function MangaChapterList(props: any) {
               <>
                 <div className="chapter">
                   <div className="chapterLeft">
-                    <img src={likeIcon} alt="like" />
+                    <img
+                      src={likeIcon}
+                      alt="like"
+                      onClick={() => handleLike(chapter.chapterId)}
+                    />
                     <Typography variant="overline">
                       <Link
                         href={`/mangas/read/${props.match.params.name}/${chapter.chapterId}`}

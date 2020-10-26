@@ -1,12 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Typography, Link, Divider } from '@material-ui/core';
 import '../styles/partial.scss';
 import searchIcon from '../static/search-icon.svg';
 import githubIcon from '../static/github-icon.png';
 import twitterIcon from '../static/twitter-icon.png';
 import linkedinIcon from '../static/linkedin-icon.png';
+// import { login, register } from './helpers/auhenticaton';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 function Header() {
+  const [loginIn, setLoggedIn] = useState(false);
+
+  const login = async () => {
+    axios
+      .post('/mangas/user/login', { username: 'dnaman', password: 'password' })
+      .then((response) => {
+        const { token } = response.data;
+        Cookies.set('token', token);
+        setLoggedIn(true);
+      });
+  };
+
+  const register = async () => {
+    axios
+      .post('/mangas/user/register', {
+        username: 'dnaman',
+        password: 'password',
+      })
+      .then((response) => {
+        const { token } = response.data;
+        Cookies.set('token', token);
+        setLoggedIn(true);
+      });
+  };
+
+  useEffect(() => {}, []);
+
   return (
     <div className="header">
       <div className="leftHeader">
@@ -21,10 +51,15 @@ function Header() {
         </Typography>
       </div>
       <div className="rightHeader">
-        <Button className="registerBtn" variant="contained" disableElevation>
+        <Button
+          className="registerBtn"
+          variant="contained"
+          disableElevation
+          onClick={register}
+        >
           Register
         </Button>
-        <Button className="loginBtn" variant="outlined">
+        <Button className="loginBtn" variant="outlined" onClick={login}>
           Log In
         </Button>
         <Divider orientation="vertical" flexItem />

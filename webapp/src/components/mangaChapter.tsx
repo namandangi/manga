@@ -5,6 +5,9 @@ import { Typography, Button, Link } from '@material-ui/core';
 import arrowIcon from '../static/readmore-icon.png';
 import likeIcon from '../static/like-icon.png';
 import subscribeIcon from '../static/add-icon.png';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+
 function MangaChapter(props: any) {
   interface Chapter {
     chapterImgUrl: string[];
@@ -25,6 +28,8 @@ function MangaChapter(props: any) {
   const [data, setData] = useState({});
   const [imgs, setImgs] = useState([]);
   const [details, setDetails] = useState({});
+  const [token, setToken] = useState('');
+
   const getMangaChapter = useCallback(async () => {
     try {
       const doc = await fetch(
@@ -36,16 +41,30 @@ function MangaChapter(props: any) {
       const mangaDoc = await fetch(`/mangas/details/${response.mangaName}`);
       const mangaResponse = await mangaDoc.json();
       setDetails(mangaResponse);
+      const isToken = !Cookies.get('token') ? null : Cookies.get('token');
+      setToken(isToken as string);
     } catch (err) {
       console.log(err);
     }
   }, []);
 
-  const handleNextChapter = () => {
-    // <Redirect to={`/mangas/read/${props.match.params.name}/${Number(props.match.params.id)+1}`} />
+  const handleSubscribe = () => {
+    axios.post(
+      `/mangas/read/${props.match.params.name}/subscribe`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   };
-  const handlePrevChapter = () => {
-    // <Redirect to={`/mangas/read/${props.match.params.name}/${Number(props.match.params.id)-1}`} />
+  const handleLike = () => {
+    axios.post(
+      `/mangas/read/${props.match.params.name}/${props.match.params.id}/like`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   };
 
   useEffect(() => {
@@ -70,7 +89,7 @@ function MangaChapter(props: any) {
               Number(props.match.params.id) - 1
             }`}
           >
-            <Button variant="contained" onClick={handlePrevChapter}>
+            <Button variant="contained">
               <img className="prev" src={arrowIcon} alt="prev-chapter" />
             </Button>
           </Link>
@@ -82,20 +101,24 @@ function MangaChapter(props: any) {
               Number(props.match.params.id) + 1
             }`}
           >
-            <Button variant="contained" onClick={handleNextChapter}>
+            <Button variant="contained">
               <img className="next" src={arrowIcon} alt="next-chapter" />
             </Button>
           </Link>
         </div>
         <div className="rightChapterHeader">
-          <Button variant="contained">
+          <Button variant="contained" onClick={handleLike}>
             <img
               src={likeIcon}
               style={{ width: '15px', height: '15px' }}
               alt="like"
             />
           </Button>
-          <Button className="subscribeBtn" variant="contained">
+          <Button
+            className="subscribeBtn"
+            variant="contained"
+            onClick={handleSubscribe}
+          >
             <img src={subscribeIcon} alt="subscribe" />
             <Typography variant="button">Subscribe</Typography>
           </Button>
