@@ -62,9 +62,7 @@ function MangaList(props: any) {
         <div className="content">
           <div className="genreTitle">
             <Typography variant="h5">LATEST UPDATES</Typography>
-            <Link href="#">
-              <img src={readmoreIcon} alt="read-more" />
-            </Link>
+            <img src={readmoreIcon} alt="read-more" />
           </div>
           <div className="manga">
             {data.slice(0, count).map((manga: Manga) => (
