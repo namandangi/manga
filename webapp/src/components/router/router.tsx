@@ -9,6 +9,7 @@ import Home from '../home';
 import MangaList from '../mangaList';
 import MangaChapterList from '../mangaChapterList';
 import MangaChapter from '../mangaChapter';
+import Auth from '../authPage';
 
 function RootRouter() {
   const latestMangaUpdate = () => <MangaList />;
@@ -25,6 +26,7 @@ function RootRouter() {
         <Route exact path="/mangas/search" component={MangaList} />
         <Route exact path="/mangas/read/:name" component={MangaChapterList} />
         <Route exact path="/mangas/read/:name/:id" component={MangaChapter} />
+        <Route exact path="/mangas/authentication" component={Auth} />
         <Route component={invalidRoute} />
       </Switch>
     </Router>

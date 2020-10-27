@@ -27,6 +27,11 @@ $grey: grey;
   flex-flow: row;
   justify-content: flex-end;
   width: 50%;
+  h6 {
+    padding: 0.5rem 1rem 0 0;
+    font-weight: bold;
+    color: #9ab710;
+  }
   button {
     border-radius: 25px;
     margin: 0 0.35rem;

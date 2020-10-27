@@ -1,29 +1,31 @@
-import { use } from 'chai';
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-async function login() {
-  const [loginIn, setLoggedIn] = useState(false);
-  axios
-    .post('/mangas/user/login', { username: 'dnaman', password: 'password' })
-    .then((response) => {
+async function login(username: String, password: String) {
+  axios.post('/mangas/user/login', { username, password }).then((response) => {
+    if (response.status === 201) {
       const { token } = response.data;
+      // const { username } = response.data.user;
       Cookies.set('token', token);
-      setLoggedIn(true);
-      return <></>;
-    });
+      // Cookies.set('username', username);
+      console.log(token);
+    }
+    return response.status;
+  });
 }
 
-async function register() {
-  const [loginIn, setLoggedIn] = useState(false);
+async function register(username: String, password: String) {
   axios
-    .post('/mangas/user/register', { username: 'dnaman', password: 'password' })
+    .post('/mangas/user/register', { username, password })
     .then((response) => {
-      const { token } = response.data;
-      Cookies.set('token', token);
-      setLoggedIn(true);
-      return <></>;
+      if (response.status === 201) {
+        const { token } = response.data;
+        // const { username } = response.data.user;
+        Cookies.set('token', token);
+        // Cookies.set('username', username);
+        console.log(response);
+      }
+      return response.status;
     });
 }
 
