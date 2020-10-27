@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Button, Typography } from '@material-ui/core';
 import readmoreIcon from '../static/readmore-icon.png';
 import '../styles/home.scss';
 import erwin_hero from '../static/erwin_hero_edited.png';
+import Cookies from 'js-cookie';
 
 function Home() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  function checkLogin() {
+    const token: string = Cookies.get('token') || '';
+    if (token != '') setLoggedIn(true);
+  }
+
+  const handleLogout = () => {
+    Cookies.remove('token');
+    setLoggedIn(false);
+  };
+
+  useEffect(() => {
+    checkLogin();
+  }, [loggedIn]);
+
   return (
     <div className="root">
       <div className="backdrop">
@@ -20,8 +37,18 @@ function Home() {
         <div className="trending">
           <Link href="/mangas/tag/views">POPULAR</Link>
         </div>
+
         <div className="button">
-          <Button variant="contained">LOGIN</Button>
+          {!loggedIn && (
+            <Link href="/mangas/authentication">
+              <Button variant="contained">LOGIN</Button>
+            </Link>
+          )}
+          {loggedIn && (
+            <Button variant="contained" onClick={handleLogout}>
+              LOGOUT
+            </Button>
+          )}
         </div>
       </div>
       <div className="title">
