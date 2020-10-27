@@ -35,10 +35,12 @@ function MangaChapterList(props: any) {
 
   const getMangaChapterList = useCallback(async () => {
     try {
-      const chapterDoc = await fetch(`/mangas/read/${props.match.params.name}`);
+      const chapterDoc = await fetch(
+        `/api/mangas/read/${props.match.params.name}`
+      );
       const chapterResponse = await chapterDoc.json();
       const mangaDoc = await fetch(
-        `/mangas/details/${chapterResponse.chapterList[0].mangaName}`
+        `/api/mangas/details/${chapterResponse.chapterList[0].mangaName}`
       );
       const mangaResponse = await mangaDoc.json();
       setData(chapterResponse.chapterList);
@@ -56,7 +58,7 @@ function MangaChapterList(props: any) {
 
   const handleSubscribe = () => {
     axios.post(
-      `/mangas/read/${props.match.params.name}/subscribe`,
+      `/api/mangas/read/${props.match.params.name}/subscribe`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -65,7 +67,7 @@ function MangaChapterList(props: any) {
   };
   const handleLike = (id: any) => {
     axios.post(
-      `/mangas/read/${props.match.params.name}/${id}/like`,
+      `/api/mangas/read/${props.match.params.name}/${id}/like`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },

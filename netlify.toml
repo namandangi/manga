@@ -4,6 +4,6 @@
   base = "/webapp"
   
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/api/*"
+  to = "https://manga-webapp.herokuapp.com/:splat"
   status = 200

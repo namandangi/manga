@@ -21,8 +21,8 @@ async function main() {
     morgan(':method :url :status :res[content-length] - :response-time ms')
   );
 
-  app.use('', mangaRouter);
-  app.use('', userRouter);
+  app.use('/api', mangaRouter);
+  app.use('/api', userRouter);
 
   app.use(express.static(path.join(__dirname, 'webapp', 'build')));
 
