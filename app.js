@@ -3,6 +3,7 @@
 /* eslint-disable no-undef */
 const express = require('express');
 const morgan = require('morgan');
+const path = require('path');
 const mangaRouter = require('./routes/mangas');
 const userRouter = require('./routes/users');
 const { dbConnection } = require('./config/db');
@@ -22,6 +23,12 @@ async function main() {
 
   app.use('', mangaRouter);
   app.use('', userRouter);
+
+  app.use(express.static(path.join(__dirname, 'webapp', 'build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'webapp', 'build', 'index.html'));
+  });
 
   return app;
 }
