@@ -126,5 +126,9 @@ $grey: grey;
     width: 35px;
     min-width: 0;
     border-color: $light-grey;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
