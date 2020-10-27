@@ -19,7 +19,7 @@ export default function Auth() {
   };
   const handleRegister = () => {
     register(username, password);
-    history.push('/mangas', { username, loggedIn: true });
+    history.push('/mangas');
   };
   const handleRegisterClick = (e: any) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ export default function Auth() {
   };
   const handleLogin = () => {
     login(username, password);
-    history.push('/mangas', { username, loggedIn: true });
+    history.push('/mangas');
   };
   const handleLoginClick = (e: any) => {
     e.preventDefault();
@@ -53,7 +53,7 @@ export default function Auth() {
             value={password}
             onChange={handlePassword}
           />
-          <div className="buttonContainer">
+          <div className="btnContainer">
             <Button
               className="registerBtn"
               variant="contained"

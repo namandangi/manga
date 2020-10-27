@@ -24,9 +24,6 @@ function Home() {
 
   return (
     <div className="root">
-      <div className="backdrop">
-        <img src={erwin_hero} />
-      </div>
       <div className="nav">
         <div className="highRated">
           <Link href="/mangas/tag/rating">TOP</Link>
