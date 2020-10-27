@@ -14,6 +14,7 @@
     "@types/react-router-dom": "^5.1.6",
     "axios": "^0.21.0",
     "js-cookie": "^2.2.1",
+    "net": "^1.0.2",
     "node-sass": "^4.14.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
@@ -21,11 +22,15 @@
     "react-scripts": "3.4.4",
     "typescript": "~3.7.2"
   },
+  "homepage": "./",
+  "main": "src/electron.js",
   "scripts": {
-    "start": "react-scripts start",
+    "react-start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "start": "nf start -p 3000"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,6 +51,8 @@
     "@types/js-cookie": "^2.2.6",
     "@types/node-sass": "^4.11.1",
     "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.8"
+    "@types/react-dom": "^16.9.8",
+    "electron": "^10.1.5",
+    "foreman": "^3.0.1"
   }
 }
