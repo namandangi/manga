@@ -7,14 +7,16 @@ $m-plus: 'M PLUS Rounded 1c', sans-serif;
 $lato: 'Lato', sans-serif;
 
 .root {
-  background-size: cover;
+  background-image: url('../static/erwin_hero2.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-blend-mode: lighten;
   background-color: $dark-blue;
 }
 .backdrop {
   position: absolute;
   transform: translateX(13rem);
   z-index: 0;
-  // height: 510px;
   mix-blend-mode: lighten;
   img {
     height: 100%;

@@ -52,21 +52,23 @@ function Header(props: any) {
 
   const handleLogout = () => {
     Cookies.remove('token');
+    Cookies.remove('uername');
     setLoggedIn(false);
     setCookies('');
+    setUsername('');
   };
 
   function handleAuth() {
     const token: string = Cookies.get('token') || '';
     setCookies(token);
-    const usernameVar: string =
-      (location.state && (location.state as any).username) || '';
-    // const loginStatus: boolean = location.state && (location.state as any).loggedIn||false;
+    const usernameVar: string = Cookies.get('username') || '';
+    setUsername(usernameVar);
+    // (location.state && (location.state as any).username) || '';
     console.log(usernameVar, token);
     if (cookies != '') {
       setLoggedIn(true);
       // setCookies(token);
-      setUsername(usernameVar);
+      // setUsername(usernameVar);
     }
   }
 
