@@ -43,10 +43,10 @@ function MangaChapterList(props: any) {
       const chapterResponse = await chapterDoc.json();
       const mangaDoc = await fetch(
         'https://manga-webapp.herokuapp.com' +
-          `/api/mangas/details/${chapterResponse.chapterList[0].mangaName}`
+          `/api/mangas/details/${chapterResponse[0].mangaName}`
       );
       const mangaResponse = await mangaDoc.json();
-      setData(chapterResponse.chapterList);
+      setData(chapterResponse);
       setDetails(mangaResponse);
       const isToken = !Cookies.get('token') ? null : Cookies.get('token');
       setToken(isToken as string);

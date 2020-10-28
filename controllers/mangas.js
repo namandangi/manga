@@ -157,7 +157,7 @@ exports.getMangaByName = async (req, res) => {
       );
     }
   });
-  res.status(200).json({ chapterList });
+  res.status(200).json(chapterList);
 };
 
 exports.getMangaChapter = async (req, res) => {
