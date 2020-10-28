@@ -27,9 +27,9 @@ function MangaList(props: any) {
         setLimit(limit + 50);
       }
       const searchUrl = pathname + search;
-      console.log(searchUrl, process.env.REACT_APP_API_URL);
+      console.log(searchUrl, 'https://manga-webapp.herokuapp.com');
       const doc = await fetch(
-        process.env.REACT_APP_API_URL + '/api' + searchUrl
+        'https://manga-webapp.herokuapp.com' + '/api' + searchUrl
       );
       const response = await doc.json();
       setData(response);

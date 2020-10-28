@@ -37,7 +37,7 @@ function Header(props: any) {
       setVisible(true);
     } else {
       const url =
-        process.env.REACT_APP_API_URL +
+        'https://manga-webapp.herokuapp.com' +
         `/mangas/search?search=${searchVal.trim().replace(/ /g, '+')}`;
       window.location.href = url;
     }
