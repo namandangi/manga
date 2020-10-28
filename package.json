@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha --timeout 20000 --exit",
-    "start": "node app.js"
+    "start": "node app.js",
+    "build:staging": "env-cmd -f .env.staging npm run build"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
+    "env-cmd": "^10.1.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "jsonwebtoken": "^8.5.1",

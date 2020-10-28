@@ -27,7 +27,7 @@ function MangaList(props: any) {
         setLimit(limit + 50);
       }
       const searchUrl = pathname + search;
-      console.log(searchUrl, limit);
+      console.log(searchUrl, process.env.REACT_APP_API_URL);
       const doc = await fetch(
         process.env.REACT_APP_API_URL + '/api' + searchUrl
       );
