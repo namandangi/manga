@@ -36,9 +36,9 @@ function Header(props: any) {
     if (searchVal === '') {
       setVisible(true);
     } else {
-      const url = `/mangas/search?search=${searchVal
-        .trim()
-        .replace(/ /g, '+')}`;
+      const url =
+        process.env.API_URL +
+        `/mangas/search?search=${searchVal.trim().replace(/ /g, '+')}`;
       window.location.href = url;
     }
   };

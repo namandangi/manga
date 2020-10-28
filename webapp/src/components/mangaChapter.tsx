@@ -33,12 +33,15 @@ function MangaChapter(props: any) {
   const getMangaChapter = useCallback(async () => {
     try {
       const doc = await fetch(
-        `/api/mangas/read/${props.match.params.name}/${props.match.params.id}`
+        process.env.API_URL +
+          `/api/mangas/read/${props.match.params.name}/${props.match.params.id}`
       );
       const response = await doc.json();
       setData(response);
       setImgs(response.chapterImgUrl);
-      const mangaDoc = await fetch(`/api/mangas/details/${response.mangaName}`);
+      const mangaDoc = await fetch(
+        process.env.API_URL + `/api/mangas/details/${response.mangaName}`
+      );
       const mangaResponse = await mangaDoc.json();
       setDetails(mangaResponse);
       const isToken = !Cookies.get('token') ? null : Cookies.get('token');
@@ -50,7 +53,8 @@ function MangaChapter(props: any) {
 
   const handleSubscribe = () => {
     axios.post(
-      `/api/mangas/read/${props.match.params.name}/subscribe`,
+      process.env.API_URL +
+        `/api/mangas/read/${props.match.params.name}/subscribe`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -59,7 +63,8 @@ function MangaChapter(props: any) {
   };
   const handleLike = () => {
     axios.post(
-      `/api/mangas/read/${props.match.params.name}/${props.match.params.id}/like`,
+      process.env.API_URL +
+        `/api/mangas/read/${props.match.params.name}/${props.match.params.id}/like`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },

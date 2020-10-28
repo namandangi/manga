@@ -28,7 +28,7 @@ function MangaList(props: any) {
       }
       const searchUrl = pathname + search;
       console.log(searchUrl, limit);
-      const doc = await fetch('/api' + searchUrl);
+      const doc = await fetch(process.env.API_URL + '/api' + searchUrl);
       const response = await doc.json();
       setData(response);
     } catch (err) {

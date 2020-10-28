@@ -4,10 +4,12 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+const cors = require('cors');
 const mangaRouter = require('./routes/mangas');
 const userRouter = require('./routes/users');
 const { dbConnection } = require('./config/db');
 const { port } = require('./config/constant');
+const { options } = require('./config/middleware');
 
 app = express();
 
@@ -20,6 +22,7 @@ async function main() {
   app.use(
     morgan(':method :url :status :res[content-length] - :response-time ms')
   );
+  app.use(cors(options));
 
   app.use('/api', mangaRouter);
   app.use('/api', userRouter);

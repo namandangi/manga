@@ -3,7 +3,10 @@ import Cookies from 'js-cookie';
 
 async function login(username: String, password: String) {
   axios
-    .post('/api/mangas/user/login', { username, password })
+    .post(process.env.API_URL + '/api/mangas/user/login', {
+      username,
+      password,
+    })
     .then((response) => {
       if (response.status === 201) {
         const { token } = response.data;
@@ -18,7 +21,10 @@ async function login(username: String, password: String) {
 
 async function register(username: String, password: String) {
   axios
-    .post('/api/mangas/user/register', { username, password })
+    .post(process.env.API_URL + '/api/mangas/user/register', {
+      username,
+      password,
+    })
     .then((response) => {
       if (response.status === 201) {
         const { token } = response.data;
