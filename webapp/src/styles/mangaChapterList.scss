@@ -1,17 +1,13 @@
-$sea-green: #00b19a;
-$lighter-gray: #b1b1b1;
-$light-gray: #e5e5e5;
-$gray: #d4d4d4;
-$dark-gray: #888888;
-$darker-gray: #c4c4c4;
-$white: #ffffff;
-$black: #000000;
+@import 'colors';
 
 .contentBody {
 }
 .contentHero {
   min-height: 280px;
-  background-color: $sea-green;
+  background-color: nth($colorList, random(6));
+  background-image: url('../static/goku_yo2.png');
+  background-repeat: no-repeat;
+  background-position: left center;
 }
 .content {
   display: flex;

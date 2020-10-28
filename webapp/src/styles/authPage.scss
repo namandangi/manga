@@ -1,6 +1,7 @@
 .formContainer {
   width: 25%;
   margin: 5% auto;
+  margin-top: 0;
   .paper {
     display: flex;
     flex-flow: column;
@@ -17,6 +18,14 @@
       font-size: 16px;
     }
   }
+}
+.loginHero {
+  width: 100%;
+  min-height: 10rem;
+  background-color: white;
+  background-position: bottom center;
+  background-image: url('../static/goku_yo.png');
+  background-size: cover;
 }
 .btnContainer {
   align-self: center;

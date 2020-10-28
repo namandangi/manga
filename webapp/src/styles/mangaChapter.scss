@@ -1,6 +1,4 @@
-$black: #000;
-$white: #ffffff;
-$grey: #c4c4c4;
+@import 'colors';
 
 .chapterHeader {
   display: flex;
@@ -38,7 +36,7 @@ $grey: #c4c4c4;
     padding: 0;
     height: 25px;
     border-radius: 25px;
-    background-color: $grey;
+    background-color: $darker-gray;
     .prev {
       transform: rotate(90deg);
     }
@@ -61,7 +59,7 @@ $grey: #c4c4c4;
     margin: 0 0.25rem;
     height: 25px;
     border-radius: 25px;
-    background-color: $grey;
+    background-color: $darker-gray;
     span {
       height: 100%;
       width: 100%;
@@ -83,6 +81,6 @@ $grey: #c4c4c4;
   margin: 0% 24%;
   img:last-child {
     padding: 0 0 2rem 0;
-    border-bottom: 1px solid $grey;
+    border-bottom: 1px solid $darker-gray;
   }
 }

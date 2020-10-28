@@ -37,6 +37,7 @@ export default function Auth() {
   return (
     <>
       <div className="formContainer">
+        <div className="loginHero"></div>
         <Paper className="paper">
           <Typography variant="subtitle1">
             Sign in to Subscribe to your favourite Mangas now!

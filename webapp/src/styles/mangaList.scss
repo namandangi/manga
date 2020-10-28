@@ -1,15 +1,4 @@
-$sea-green: #00b19a;
-$grey: #f3f3f3;
-$white: #ffffff;
-$off-white: #ede6e6;
-$pink: #fd337f;
-$yellow: #eea800;
-$green: #9ab710;
-$blue: #1ba8f2;
-$red: #c00355;
-$purple: #7a41e9;
-
-$colorList: $yellow, $green, $blue, $red, $purple, $pink, $sea-green;
+@import 'colors';
 
 .contentBody {
   display: flex;
@@ -17,14 +6,17 @@ $colorList: $yellow, $green, $blue, $red, $purple, $pink, $sea-green;
 }
 .hero {
   min-height: 18.5rem;
-  background-color: $sea-green;
+  background-image: url('../static/almight_cov.png');
+  background-repeat: no-repeat;
+  background-position: left;
+  background-color: nth($colorList, random(6));
 }
 .content {
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  background-color: $grey;
+  background-color: $dark-off-white;
   padding: 1rem 15% 3rem 15%;
   .btmReadmoreBtn {
     width: 35px;
