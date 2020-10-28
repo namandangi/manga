@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Footer } from '../components/partial';
 import '../styles/mangaChapter.scss';
-import { Typography, Button, Link } from '@material-ui/core';
+import { Typography, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import arrowIcon from '../static/readmore-icon.png';
 import likeIcon from '../static/like-icon.png';
 import subscribeIcon from '../static/add-icon.png';
@@ -85,13 +86,13 @@ function MangaChapter(props: any) {
       <div className="chapterHeader">
         <div className="leftChapterHeader">
           <Typography variant="h6">
-            <Link href="#">{(details as Details).title}</Link> &nbsp; {'>'}
+            <Link to="#">{(details as Details).title}</Link> &nbsp; {'>'}
           </Typography>
           <Typography variant="h6">{(data as Chapter).chapterTitle}</Typography>
         </div>
         <div className="middleChapterHeader">
           <Link
-            href={`/mangas/read/${props.match.params.name}/${
+            to={`/mangas/read/${props.match.params.name}/${
               Number(props.match.params.id) - 1
             }`}
           >
@@ -103,7 +104,7 @@ function MangaChapter(props: any) {
             {'#'} {(data as Chapter).chapterId}
           </Typography>
           <Link
-            href={`/mangas/read/${props.match.params.name}/${
+            to={`/mangas/read/${props.match.params.name}/${
               Number(props.match.params.id) + 1
             }`}
           >

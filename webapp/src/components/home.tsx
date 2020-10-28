@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import readmoreIcon from '../static/readmore-icon.png';
 import '../styles/home.scss';
 import Cookies from 'js-cookie';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -25,18 +26,18 @@ function Home() {
     <div className="root">
       <div className="nav">
         <div className="highRated">
-          <Link href="/mangas/tag/rating">TOP</Link>
+          <Link to="/mangas/tag/rating">TOP</Link>
         </div>
         <div className="mostViewed">
-          <Link href="/mangas/tag/trending">TRENDING</Link>
+          <Link to="/mangas/tag/trending">TRENDING</Link>
         </div>
         <div className="trending">
-          <Link href="/mangas/tag/views">POPULAR</Link>
+          <Link to="/mangas/tag/views">POPULAR</Link>
         </div>
 
         <div className="button">
           {!loggedIn && (
-            <Link href="/mangas/authentication">
+            <Link to="/mangas/authentication">
               <Button variant="contained">LOGIN</Button>
             </Link>
           )}
@@ -48,7 +49,7 @@ function Home() {
         </div>
       </div>
       <div className="title">
-        <Link href="/mangas">
+        <Link to="/mangas">
           <Typography variant="h1">MANGA!</Typography>
         </Link>
       </div>

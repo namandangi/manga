@@ -3,7 +3,8 @@ import { Header, Footer } from './partial';
 import '../styles/mangaList.scss';
 import readmoreIcon from '../static/readmore-icon.png';
 import ratingIcon from '../static/rating-icon.png';
-import { Paper, Typography, Link, Button } from '@material-ui/core';
+import { Paper, Typography, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 function MangaList(props: any) {
   interface Manga {
@@ -67,7 +68,7 @@ function MangaList(props: any) {
           </div>
           <div className="manga">
             {data.slice(0, count).map((manga: Manga) => (
-              <Link href={`/mangas/read/${manga.name}`}>
+              <Link to={`/mangas/read/${manga.name}`}>
                 <Paper className="paper" variant="outlined" square>
                   <div className="frontCard">
                     <img

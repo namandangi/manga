@@ -1,11 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import {
-  Button,
-  Typography,
-  Link,
-  Divider,
-  TextField,
-} from '@material-ui/core';
+import { Button, Typography, Divider, TextField } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import '../styles/partial.scss';
 import searchIcon from '../static/search-icon.svg';
 import githubIcon from '../static/github-icon.png';
@@ -81,13 +76,13 @@ function Header(props: any) {
     <div className="header">
       <div className="leftHeader">
         <Typography variant="h5">
-          <Link href="/mangas/tag/rating">TOP</Link>
+          <Link to="/mangas/tag/rating">TOP</Link>
         </Typography>
         <Typography variant="h5">
-          <Link href="/mangas/tag/trending">TRENDING</Link>
+          <Link to="/mangas/tag/trending">TRENDING</Link>
         </Typography>
         <Typography variant="h5">
-          <Link href="/mangas/tag/views">POPULAR</Link>
+          <Link to="/mangas/tag/views">POPULAR</Link>
         </Typography>
       </div>
       <div className="rightHeader">
@@ -157,29 +152,29 @@ function Footer() {
       </div>
       <div className="middleFooter">
         <Typography variant="overline">
-          <Link href="#">About </Link>
+          <Link to="#">About </Link>
         </Typography>
         <Divider className="divider" orientation="vertical" flexItem />
         <Typography variant="overline">
-          <Link href="#">Feedback</Link>
+          <Link to="#">Feedback</Link>
         </Typography>
         <Divider className="divider" orientation="vertical" flexItem />
         <Typography variant="overline">
-          <Link href="#">Help</Link>
+          <Link to="#">Help</Link>
         </Typography>
       </div>
       <div className="rightFooter">
-        <Link href="https://github.com/namandangi/manga">
+        <Link to="https://github.com/namandangi/manga">
           <Button variant="outlined" style={{ backgroundColor: 'black' }}>
             <img src={githubIcon} alt="github" />
           </Button>
         </Link>
-        <Link href="https://linkedin.com/in/namandangi">
+        <Link to="https://linkedin.com/in/namandangi">
           <Button variant="outlined">
             <img src={linkedinIcon} alt="linkedin" />
           </Button>
         </Link>
-        <Link href="https://twitter.com/namandangi_">
+        <Link to="https://twitter.com/namandangi_">
           <Button variant="outlined">
             <img src={twitterIcon} alt="twitter" />
           </Button>

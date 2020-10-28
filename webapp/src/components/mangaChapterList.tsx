@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Header, Footer } from './partial';
 import '../styles/mangaChapterList.scss';
-import { Typography, Button, Link, Divider } from '@material-ui/core';
+import { Typography, Button, Divider } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import subscribeIcon from '../static/add-icon.png';
@@ -133,7 +134,7 @@ function MangaChapterList(props: any) {
                       </div>
                     </div>
                     <Link
-                      href={`/mangas/read/${(details as Details).name}/${
+                      to={`/mangas/read/${(details as Details).name}/${
                         data.length > 0 &&
                         (data[data.length - 1] as Chapter).chapterId
                       }`}
@@ -172,7 +173,7 @@ function MangaChapterList(props: any) {
                     />
                     <Typography variant="overline">
                       <Link
-                        href={`/mangas/read/${props.match.params.name}/${chapter.chapterId}`}
+                        to={`/mangas/read/${props.match.params.name}/${chapter.chapterId}`}
                       >
                         {chapter.chapterTitle}
                       </Link>
