@@ -5,6 +5,7 @@ import readmoreIcon from '../static/readmore-icon.png';
 import ratingIcon from '../static/rating-icon.png';
 import { Paper, Typography, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import Page404 from './404';
 
 function MangaList(props: any) {
   interface Manga {
@@ -59,45 +60,50 @@ function MangaList(props: any) {
   return (
     <>
       <Header />
-      <div className="contentBody">
-        <div className="hero"></div>
-        <div className="content">
-          <div className="genreTitle">
-            <Typography variant="h5">LATEST UPDATES</Typography>
-            <img src={readmoreIcon} alt="read-more" />
+      {data.length > 0 && (
+        <>
+          <div className="contentBody">
+            <div className="hero"></div>
+            <div className="content">
+              <div className="genreTitle">
+                <Typography variant="h5">LATEST UPDATES</Typography>
+                <img src={readmoreIcon} alt="read-more" />
+              </div>
+              <div className="manga">
+                {data.slice(0, count).map((manga: Manga) => (
+                  <Link to={`/mangas/read/${manga.name}`}>
+                    <Paper className="paper" variant="outlined" square>
+                      <div className="frontCard">
+                        <img
+                          src={manga.imgUrl}
+                          style={{ width: '130px', height: '180px' }}
+                        />
+                      </div>
+                      <div className="backCard">
+                        <Typography variant="body1">{manga.title}</Typography>
+                        <div className="innerRating">
+                          <img src={ratingIcon} />
+                          <Typography variant="subtitle1">
+                            {manga.rating}
+                          </Typography>
+                        </div>
+                      </div>
+                    </Paper>
+                  </Link>
+                ))}
+              </div>
+              <Button
+                className="btmReadmoreBtn"
+                variant="contained"
+                onClick={handleReadMore}
+              >
+                <img src={readmoreIcon} alt="read-more" />
+              </Button>
+            </div>
           </div>
-          <div className="manga">
-            {data.slice(0, count).map((manga: Manga) => (
-              <Link to={`/mangas/read/${manga.name}`}>
-                <Paper className="paper" variant="outlined" square>
-                  <div className="frontCard">
-                    <img
-                      src={manga.imgUrl}
-                      style={{ width: '130px', height: '180px' }}
-                    />
-                  </div>
-                  <div className="backCard">
-                    <Typography variant="body1">{manga.title}</Typography>
-                    <div className="innerRating">
-                      <img src={ratingIcon} />
-                      <Typography variant="subtitle1">
-                        {manga.rating}
-                      </Typography>
-                    </div>
-                  </div>
-                </Paper>
-              </Link>
-            ))}
-          </div>
-          <Button
-            className="btmReadmoreBtn"
-            variant="contained"
-            onClick={handleReadMore}
-          >
-            <img src={readmoreIcon} alt="read-more" />
-          </Button>
-        </div>
-      </div>
+        </>
+      )}
+      {data.length === 0 && <Page404 />}
       <Footer />
     </>
   );

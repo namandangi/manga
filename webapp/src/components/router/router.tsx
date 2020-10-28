@@ -12,9 +12,6 @@ import MangaChapter from '../mangaChapter';
 import Auth from '../authPage';
 
 function RootRouter() {
-  const latestMangaUpdate = () => <MangaList />;
-  const mangaByTag = () => <MangaList />;
-  const searchManga = () => <MangaList />;
   const invalidRoute = () => <Redirect to="/" />;
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Footer } from '../components/partial';
+import { Header, Footer } from '../components/partial';
 import '../styles/mangaChapter.scss';
 import { Typography, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ import likeIcon from '../static/like-icon.png';
 import subscribeIcon from '../static/add-icon.png';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import Page404 from './404';
 
 function MangaChapter(props: any) {
   interface Chapter {
@@ -83,59 +84,71 @@ function MangaChapter(props: any) {
   console.log(props);
   return (
     <>
-      <div className="chapterHeader">
-        <div className="leftChapterHeader">
-          <Typography variant="h6">
-            <Link to="#">{(details as Details).title}</Link> &nbsp; {'>'}
-          </Typography>
-          <Typography variant="h6">{(data as Chapter).chapterTitle}</Typography>
-        </div>
-        <div className="middleChapterHeader">
-          <Link
-            to={`/mangas/read/${props.match.params.name}/${
-              Number(props.match.params.id) - 1
-            }`}
-          >
-            <Button variant="contained">
-              <img className="prev" src={arrowIcon} alt="prev-chapter" />
-            </Button>
-          </Link>
-          <Typography variant="h6">
-            {'#'} {(data as Chapter).chapterId}
-          </Typography>
-          <Link
-            to={`/mangas/read/${props.match.params.name}/${
-              Number(props.match.params.id) + 1
-            }`}
-          >
-            <Button variant="contained">
-              <img className="next" src={arrowIcon} alt="next-chapter" />
-            </Button>
-          </Link>
-        </div>
-        <div className="rightChapterHeader">
-          <Button variant="contained" onClick={handleLike}>
-            <img
-              src={likeIcon}
-              style={{ width: '15px', height: '15px' }}
-              alt="like"
-            />
-          </Button>
-          <Button
-            className="subscribeBtn"
-            variant="contained"
-            onClick={handleSubscribe}
-          >
-            <img src={subscribeIcon} alt="subscribe" />
-            <Typography variant="button">Subscribe</Typography>
-          </Button>
-        </div>
-      </div>
-      <div className="chapterContent">
-        {imgs.map((img: string) => (
-          <img src={img} />
-        ))}
-      </div>
+      {imgs.length > 0 && (
+        <>
+          <div className="chapterHeader">
+            <div className="leftChapterHeader">
+              <Typography variant="h6">
+                <Link to="#">{(details as Details).title}</Link> &nbsp; {'>'}
+              </Typography>
+              <Typography variant="h6">
+                {(data as Chapter).chapterTitle}
+              </Typography>
+            </div>
+            <div className="middleChapterHeader">
+              <Link
+                to={`/mangas/read/${props.match.params.name}/${
+                  Number(props.match.params.id) - 1
+                }`}
+              >
+                <Button variant="contained">
+                  <img className="prev" src={arrowIcon} alt="prev-chapter" />
+                </Button>
+              </Link>
+              <Typography variant="h6">
+                {'#'} {(data as Chapter).chapterId}
+              </Typography>
+              <Link
+                to={`/mangas/read/${props.match.params.name}/${
+                  Number(props.match.params.id) + 1
+                }`}
+              >
+                <Button variant="contained">
+                  <img className="next" src={arrowIcon} alt="next-chapter" />
+                </Button>
+              </Link>
+            </div>
+            <div className="rightChapterHeader">
+              <Button variant="contained" onClick={handleLike}>
+                <img
+                  src={likeIcon}
+                  style={{ width: '15px', height: '15px' }}
+                  alt="like"
+                />
+              </Button>
+              <Button
+                className="subscribeBtn"
+                variant="contained"
+                onClick={handleSubscribe}
+              >
+                <img src={subscribeIcon} alt="subscribe" />
+                <Typography variant="button">Subscribe</Typography>
+              </Button>
+            </div>
+          </div>
+          <div className="chapterContent">
+            {imgs.map((img: string) => (
+              <img src={img} />
+            ))}
+          </div>
+        </>
+      )}
+      {imgs.length === 0 && (
+        <>
+          <Header />
+          <Page404 />
+        </>
+      )}
       <Footer />
     </>
   );
