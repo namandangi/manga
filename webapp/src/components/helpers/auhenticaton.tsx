@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 async function login(username: String, password: String) {
   axios
-    .post(process.env.API_URL + '/api/mangas/user/login', {
+    .post(process.env.REACT_APP_API_URL + '/api/mangas/user/login', {
       username,
       password,
     })
@@ -21,7 +21,7 @@ async function login(username: String, password: String) {
 
 async function register(username: String, password: String) {
   axios
-    .post(process.env.API_URL + '/api/mangas/user/register', {
+    .post(process.env.REACT_APP_API_URL + '/api/mangas/user/register', {
       username,
       password,
     })

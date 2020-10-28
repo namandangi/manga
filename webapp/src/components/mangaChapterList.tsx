@@ -36,11 +36,12 @@ function MangaChapterList(props: any) {
   const getMangaChapterList = useCallback(async () => {
     try {
       const chapterDoc = await fetch(
-        process.env.API_URL + `/api/mangas/read/${props.match.params.name}`
+        process.env.REACT_APP_API_URL +
+          `/api/mangas/read/${props.match.params.name}`
       );
       const chapterResponse = await chapterDoc.json();
       const mangaDoc = await fetch(
-        process.env.API_URL +
+        process.env.REACT_APP_API_URL +
           `/api/mangas/details/${chapterResponse.chapterList[0].mangaName}`
       );
       const mangaResponse = await mangaDoc.json();
@@ -59,7 +60,7 @@ function MangaChapterList(props: any) {
 
   const handleSubscribe = () => {
     axios.post(
-      process.env.API_URL +
+      process.env.REACT_APP_API_URL +
         `/api/mangas/read/${props.match.params.name}/subscribe`,
       {},
       {
@@ -69,7 +70,7 @@ function MangaChapterList(props: any) {
   };
   const handleLike = (id: any) => {
     axios.post(
-      process.env.API_URL +
+      process.env.REACT_APP_API_URL +
         `/api/mangas/read/${props.match.params.name}/${id}/like`,
       {},
       {
