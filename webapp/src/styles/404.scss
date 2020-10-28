@@ -1,0 +1,31 @@
+@import 'colors';
+
+.content404 {
+  margin: 5% auto;
+  h1 {
+    font-weight: bold;
+    color: $dark-gray;
+  }
+  h3 {
+    font-weight: lighter;
+    color: $lighter-gray;
+  }
+  h5 {
+    color: $dark-gray;
+  }
+  a {
+    color: nth($colorList, random(6));
+    text-decoration: none;
+  }
+  a:hover {
+    color: nth($colorList, random(6));
+    text-decoration: none;
+  }
+}
+.hero404 {
+  min-height: 15rem;
+  background-image: url('../static/sad.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
