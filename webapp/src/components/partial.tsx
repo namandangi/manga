@@ -38,7 +38,7 @@ function Header(props: any) {
     } else {
       const url =
         'https://manga-webapp.herokuapp.com' +
-        `/mangas/search?search=${searchVal.trim().replace(/ /g, '+')}`;
+        `/api/mangas/search?search=${searchVal.trim().replace(/ /g, '+')}`;
       window.location.href = url;
     }
   };

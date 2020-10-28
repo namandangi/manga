@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, Button, Typography } from '@material-ui/core';
 import readmoreIcon from '../static/readmore-icon.png';
 import '../styles/home.scss';
-import erwin_hero from '../static/erwin_hero_edited.png';
 import Cookies from 'js-cookie';
 
 function Home() {

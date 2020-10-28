@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 import { Header, Footer } from './partial';
 import '../styles/mangaList.scss';
 import readmoreIcon from '../static/readmore-icon.png';
