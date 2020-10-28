@@ -10,6 +10,7 @@ import MangaList from '../mangaList';
 import MangaChapterList from '../mangaChapterList';
 import MangaChapter from '../mangaChapter';
 import Auth from '../authPage';
+import Page404 from '../404';
 
 function RootRouter() {
   const invalidRoute = () => <Redirect to="/" />;
@@ -24,7 +25,7 @@ function RootRouter() {
         <Route exact path="/mangas/read/:name" component={MangaChapterList} />
         <Route exact path="/mangas/read/:name/:id" component={MangaChapter} />
         <Route exact path="/mangas/authentication" component={Auth} />
-        <Route component={invalidRoute} />
+        <Route component={Page404} />
       </Switch>
     </Router>
   );

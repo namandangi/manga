@@ -13,6 +13,9 @@
   h5 {
     color: $dark-gray;
   }
+  h6 {
+    color: $dark-gray;
+  }
   a {
     color: nth($colorList, random(6));
     text-decoration: none;
