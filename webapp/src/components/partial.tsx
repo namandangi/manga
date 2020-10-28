@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Button, Typography, Divider, TextField } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import '../styles/partial.scss';
-import searchIcon from '../static/search-icon.svg';
+import searchIcon from '../static/search-icon.png';
 import githubIcon from '../static/github-icon.png';
 import twitterIcon from '../static/twitter-icon.png';
 import linkedinIcon from '../static/linkedin-icon.png';
@@ -34,7 +34,8 @@ function Header(props: any) {
       const url = `/mangas/search?search=${searchVal
         .trim()
         .replace(/ /g, '+')}`;
-      window.location.href = url;
+      // window.location.href = url;
+      history.push(url);
     }
   };
   const handleKeyDown = async (e: any) => {

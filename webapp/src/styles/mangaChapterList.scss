@@ -130,7 +130,7 @@ $black: #000000;
 }
 .genreList {
   display: flex;
-  flex-flow: row;
+  flex-direction: row;
   flex-wrap: wrap;
 }
 .release {
