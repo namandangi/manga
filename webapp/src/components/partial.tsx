@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Button, Typography, Divider, TextField } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Button, Typography, Divider } from '@material-ui/core';
 import '../styles/partial.scss';
 import searchIcon from '../static/search-icon.png';
 import githubIcon from '../static/github-icon.png';
 import twitterIcon from '../static/twitter-icon.png';
 import linkedinIcon from '../static/linkedin-icon.png';
 import Cookies from 'js-cookie';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 function Header(props: any) {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -16,7 +15,6 @@ function Header(props: any) {
   const [searchVal, setSearchVal] = useState('');
   const [cookies, setCookies] = useState('');
   const history = useHistory();
-  const location = useLocation();
 
   const handleAuthRedirect = async () => {
     history.push('/mangas/authentication');
