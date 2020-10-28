@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha --timeout 20000 --exit",
-    "start": "node app.js",
-    "build:staging": "env-cmd -f .env.staging npm run build"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
