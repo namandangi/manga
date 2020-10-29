@@ -68,7 +68,7 @@ function Header(props: any) {
 
   useEffect(() => {
     handleAuth();
-  }, [loggedIn, cookies]);
+  }, [loggedIn, cookies, window.location.href]);
   console.log('loggedIn: ', loggedIn);
 
   return (
