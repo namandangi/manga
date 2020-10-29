@@ -32,8 +32,8 @@ function Header(props: any) {
       const url = `/mangas/search?search=${searchVal
         .trim()
         .replace(/ /g, '+')}`;
-      // window.location.href = url;
-      history.push(url);
+      window.location.href = url;
+      // history.push(url);
     }
   };
   const handleKeyDown = async (e: any) => {

@@ -5,7 +5,11 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha --timeout 20000 --exit",
-    "start": "node app.js"
+    "start": "node app.js",
+    "deploy": "sh build.sh",
+    "build": "npm run build-backend && npm run build-frontend",
+    "build-backend": "npm install",
+    "build-frontend": "cd ./webapp && npm install && npm run build && cd .."
   },
   "author": "",
   "license": "ISC",
@@ -60,8 +64,5 @@
     "*.js": [
       "eslint --fix"
     ]
-  },
-  "engines": {
-    "node": "12.18.1"
   }
 }
