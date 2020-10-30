@@ -22,7 +22,7 @@ function MangaList(props: any) {
 
   const getMangaList = useCallback(async () => {
     try {
-      let surl = window.location.href.substring(21);
+      let surl = window.location.href.substring(34);
       surl = !surl.includes('tag') ? surl : surl + `?limit=${limit}`;
       if (limit == count) {
         setLimit(limit + 50);
