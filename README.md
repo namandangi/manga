@@ -1,6 +1,6 @@
-
 [![HitCount](http://hits.dwyl.io/namandangi/comics.svg)](http://hits.dwyl.io/namandangi/comics) ![](https://img.shields.io/github/issues/namandangi/manga?style=flat-square) ![](https://img.shields.io/github/languages/top/namandangi/manga?style=flat-square) ![](https://img.shields.io/github/languages/count/namandangi/manga?style=flat-square)
 <br />
+
 <p align="center">
   <a href="https://manga-webapp.herokuapp.com/">
     <img src="https://github.com/namandangi/comics/blob/master/public/docs/levi_finger_spin.gif" alt="Logo" width="200" height="200">
@@ -107,6 +107,14 @@ In the root directory of the webapp setup the startUrl in ` electron.js` file an
 
 ```
 npm run dev
+```
+
+## Run Test
+
+In the root directory of the project run
+
+```
+   npm test
 ```
 
 ## Contributing
