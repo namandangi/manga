@@ -44,7 +44,7 @@ describe('UserDB Connection', async () => {
     it('should throw an error for an existing user', async () => {
       chai
         .request(server)
-        .post('/mangas/user/register')
+        .post('/api/mangas/user/register')
         .send({ username: 'namandangi', password: 'password' })
         .end((err, response) => {
           response.should.have.a.status(400);
@@ -58,7 +58,7 @@ describe('UserDB Connection', async () => {
     it('should register a new user', async () => {
       chai
         .request(server)
-        .post('/mangas/user/register')
+        .post('/api/mangas/user/register')
         .send({ username: 'test', password: 'password' })
         .end((err, response) => {
           response.should.have.a.status(201);
@@ -75,7 +75,7 @@ describe('UserDB Connection', async () => {
     it('should throw an error for login using an unregistered username', async () => {
       chai
         .request(server)
-        .post('/mangas/user/login')
+        .post('/api/mangas/user/login')
         .send({ username: 'test', password: 'password' })
         .end((err, response) => {
           response.should.have.a.status(401);
@@ -89,7 +89,7 @@ describe('UserDB Connection', async () => {
     it('should login an existing user', async () => {
       chai
         .request(server)
-        .post('/mangas/user/login')
+        .post('/api/mangas/user/login')
         .send({ username: 'namandangi', password: 'password' })
         .end((err, response) => {
           response.should.have.a.status(201);
@@ -106,7 +106,7 @@ describe('UserDB Connection', async () => {
     it('should get a user', async () => {
       chai
         .request(server)
-        .get('/mangas/user/get/namandangi')
+        .get('/api/mangas/user/get/namandangi')
         .send({ username: 'namandangi', password: 'password' })
         .end((err, response) => {
           response.should.have.a.status(200);
@@ -122,12 +122,12 @@ describe('UserDB Connection', async () => {
     it('should delete a user', async () => {
       const doc = await chai
         .request(server)
-        .post('/mangas/user/register')
+        .post('/api/mangas/user/register')
         .send({ username: 'test', password: 'password' });
       const { token } = doc.body;
       chai
         .request(server)
-        .delete('/mangas/user/delete/test')
+        .delete('/api/mangas/user/delete/test')
         .set('Authorization', `Bearer ${token}`)
         .send()
         .end((err, response) => {

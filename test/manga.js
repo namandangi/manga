@@ -32,7 +32,7 @@ xdescribe('Manga', () => {
   xit('should get all recently-updated mangas', (done) => {
     chai
       .request(server)
-      .get('/mangas')
+      .get('/api/mangas')
       .end((err, response) => {
         response.should.have.a.status(200);
         response.should.be.json;
