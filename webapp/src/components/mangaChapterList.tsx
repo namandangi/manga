@@ -38,12 +38,12 @@ function MangaChapterList(props: any) {
   const getMangaChapterList = useCallback(async () => {
     try {
       const chapterDoc = await fetch(
-        'https://manga-webapp.herokuapp.com' +
+        process.env.REACT_APP_API_URL +
           `/api/mangas/read/${props.match.params.name}`
       );
       const chapterResponse = await chapterDoc.json();
       const mangaDoc = await fetch(
-        'https://manga-webapp.herokuapp.com' +
+        process.env.REACT_APP_API_URL +
           `/api/mangas/details/${chapterResponse[0].mangaName}`
       );
       const mangaResponse = await mangaDoc.json();
@@ -62,7 +62,7 @@ function MangaChapterList(props: any) {
 
   const handleSubscribe = () => {
     axios.post(
-      'https://manga-webapp.herokuapp.com' +
+      process.env.REACT_APP_API_URL +
         `/api/mangas/read/${props.match.params.name}/subscribe`,
       {},
       {
@@ -72,7 +72,7 @@ function MangaChapterList(props: any) {
   };
   const handleLike = (id: any) => {
     axios.post(
-      'https://manga-webapp.herokuapp.com' +
+      process.env.REACT_APP_API_URL +
         `/api/mangas/read/${props.match.params.name}/${id}/like`,
       {},
       {
@@ -135,11 +135,13 @@ function MangaChapterList(props: any) {
                           <Typography variant="overline">Genres:</Typography>
                           <div className="genreList">
                             {(details as Details).genre &&
-                              (details as Details).genre.map((el: String) => (
-                                <Typography variant="body1">
-                                  {el} &nbsp;
-                                </Typography>
-                              ))}
+                              (details as Details).genre.map(
+                                (el: String, id: number) => (
+                                  <Typography key={id} variant="body1">
+                                    {el} &nbsp;
+                                  </Typography>
+                                )
+                              )}
                           </div>
                         </div>
                         <Link
@@ -171,8 +173,8 @@ function MangaChapterList(props: any) {
                 </div>
               </div>
               <div className="chapterList">
-                {data.slice(0, count).map((chapter: Chapter) => (
-                  <>
+                {data.slice(0, count).map((chapter: Chapter, i: number) => (
+                  <div key={i}>
                     <div className="chapter">
                       <div className="chapterLeft">
                         <img
@@ -195,7 +197,7 @@ function MangaChapterList(props: any) {
                       </div>
                     </div>
                     <Divider variant="middle" />
-                  </>
+                  </div>
                 ))}
                 <div className="readmoreBtn">
                   <Button variant="outlined" onClick={handleReadMore}>

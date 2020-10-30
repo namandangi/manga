@@ -17,17 +17,17 @@ export default function Auth() {
   const handlePassword = (e: any) => {
     setPassword(e.target.value);
   };
-  const handleRegister = () => {
-    register(username, password);
-    history.push('/mangas');
+  const handleRegister = async () => {
+    await register(username, password);
+    history.push(`/mangas`);
   };
   const handleRegisterClick = (e: any) => {
     e.preventDefault();
     handleRegister();
   };
-  const handleLogin = () => {
-    login(username, password);
-    history.push('/mangas');
+  const handleLogin = async () => {
+    await login(username, password);
+    history.push(`/mangas`);
   };
   const handleLoginClick = (e: any) => {
     e.preventDefault();

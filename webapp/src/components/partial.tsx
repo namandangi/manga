@@ -32,8 +32,7 @@ function Header(props: any) {
       const url = `/mangas/search?search=${searchVal
         .trim()
         .replace(/ /g, '+')}`;
-      window.location.href = url;
-      // history.push(url);
+      history.push(url);
     }
   };
   const handleKeyDown = async (e: any) => {
@@ -46,7 +45,6 @@ function Header(props: any) {
 
   const handleLogout = () => {
     Cookies.remove('token');
-    Cookies.remove('uername');
     setLoggedIn(false);
     setCookies('');
     setUsername('');
@@ -54,22 +52,18 @@ function Header(props: any) {
 
   function handleAuth() {
     const token: string = Cookies.get('token') || '';
+    console.log('token:', cookies);
     setCookies(token);
     const usernameVar: string = Cookies.get('username') || '';
-    setUsername(usernameVar);
-    // (location.state && (location.state as any).username) || '';
-    console.log(usernameVar, token);
     if (cookies != '') {
+      setUsername(usernameVar);
       setLoggedIn(true);
-      // setCookies(token);
-      // setUsername(usernameVar);
     }
   }
 
   useEffect(() => {
     handleAuth();
-  }, [loggedIn, cookies, window.location.href]);
-  console.log('loggedIn: ', loggedIn);
+  }, [loggedIn, Cookies.get('token')]);
 
   return (
     <div className="header">

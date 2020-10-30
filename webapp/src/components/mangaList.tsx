@@ -22,16 +22,13 @@ function MangaList(props: any) {
 
   const getMangaList = useCallback(async () => {
     try {
-      let { pathname, search } = props.location;
-      search = !pathname.includes('tag') ? search : search + `?limit=${limit}`;
+      let surl = window.location.href.substring(21);
+      surl = !surl.includes('tag') ? surl : surl + `?limit=${limit}`;
       if (limit == count) {
         setLimit(limit + 50);
       }
-      const searchUrl = pathname + search;
-      console.log(searchUrl, 'https://manga-webapp.herokuapp.com');
-      const doc = await fetch(
-        'https://manga-webapp.herokuapp.com' + '/api' + searchUrl
-      );
+      console.log(surl);
+      const doc = await fetch(process.env.REACT_APP_API_URL + '/api' + surl);
       const response = await doc.json();
       setData(response);
     } catch (err) {
@@ -53,9 +50,7 @@ function MangaList(props: any) {
   useEffect(() => {
     getMangaList();
     resetLimit();
-  }, [setData, limit]);
-  console.log(data);
-  console.log(count, limit);
+  }, [limit, window.location.href]);
 
   return (
     <>
@@ -70,26 +65,28 @@ function MangaList(props: any) {
                 <img src={readmoreIcon} alt="read-more" />
               </div>
               <div className="manga">
-                {data.slice(0, count).map((manga: Manga) => (
-                  <Link to={`/mangas/read/${manga.name}`}>
-                    <Paper className="paper" variant="outlined" square>
-                      <div className="frontCard">
-                        <img
-                          src={manga.imgUrl}
-                          style={{ width: '130px', height: '180px' }}
-                        />
-                      </div>
-                      <div className="backCard">
-                        <Typography variant="body1">{manga.title}</Typography>
-                        <div className="innerRating">
-                          <img src={ratingIcon} />
-                          <Typography variant="subtitle1">
-                            {manga.rating}
-                          </Typography>
+                {data.slice(0, count).map((manga: Manga, i: number) => (
+                  <div key={i}>
+                    <Link to={`/mangas/read/${manga.name}`}>
+                      <Paper className="paper" variant="outlined" square>
+                        <div className="frontCard">
+                          <img
+                            src={manga.imgUrl}
+                            style={{ width: '130px', height: '180px' }}
+                          />
                         </div>
-                      </div>
-                    </Paper>
-                  </Link>
+                        <div className="backCard">
+                          <Typography variant="body1">{manga.title}</Typography>
+                          <div className="innerRating">
+                            <img src={ratingIcon} />
+                            <Typography variant="subtitle1">
+                              {manga.rating}
+                            </Typography>
+                          </div>
+                        </div>
+                      </Paper>
+                    </Link>
+                  </div>
                 ))}
               </div>
               <Button
