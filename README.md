@@ -1,3 +1,5 @@
+
+[![HitCount](http://hits.dwyl.io/namandangi/comics.svg)](http://hits.dwyl.io/namandangi/comics) ![](https://img.shields.io/github/issues/namandangi/manga?style=flat-square) ![](https://img.shields.io/github/languages/top/namandangi/manga?style=flat-square) ![](https://img.shields.io/github/languages/count/namandangi/manga?style=flat-square)
 <br />
 <p align="center">
   <a href="https://manga-webapp.herokuapp.com/">
@@ -7,7 +9,7 @@
   <h3 align="center">Manga!</h3>
 
   <p align="center">
-    A web-scraper based Manga Reader
+    A web-scraper based Manga Reader!
     <br />
     <a href="https://github.com/namandangi/manga/"><strong>Explore the docs »</strong></a>
     <br />
@@ -17,9 +19,6 @@
     <a href="https://github.com/namandangi/manga/issues">Report Bug</a>
     |
     <a href="https://github.com/namandangi/manga/issues">Request Feature</a>
-  </p>
-  <p align="center">  
-   [![HitCount](http://hits.dwyl.io/namandangi/comics.svg)](http://hits.dwyl.io/namandangi/comics) ![](https://img.shields.io/github/issues/namandangi/manga?style=flat-square) ![](https://img.shields.io/github/languages/top/namandangi/manga?style=flat-square) ![](https://img.shields.io/github/languages/count/namandangi/manga?style=flat-square) 
   </p>
 </p>
    
