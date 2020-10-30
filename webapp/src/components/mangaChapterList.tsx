@@ -38,12 +38,12 @@ function MangaChapterList(props: any) {
   const getMangaChapterList = useCallback(async () => {
     try {
       const chapterDoc = await fetch(
-        process.env.REACT_APP_API_URL +
+        'https://manga-webapp.herokuapp.com' +
           `/api/mangas/read/${props.match.params.name}`
       );
       const chapterResponse = await chapterDoc.json();
       const mangaDoc = await fetch(
-        process.env.REACT_APP_API_URL +
+        'https://manga-webapp.herokuapp.com' +
           `/api/mangas/details/${chapterResponse[0].mangaName}`
       );
       const mangaResponse = await mangaDoc.json();
@@ -62,7 +62,7 @@ function MangaChapterList(props: any) {
 
   const handleSubscribe = () => {
     axios.post(
-      process.env.REACT_APP_API_URL +
+      'https://manga-webapp.herokuapp.com' +
         `/api/mangas/read/${props.match.params.name}/subscribe`,
       {},
       {
@@ -72,7 +72,7 @@ function MangaChapterList(props: any) {
   };
   const handleLike = (id: any) => {
     axios.post(
-      process.env.REACT_APP_API_URL +
+      'https://manga-webapp.herokuapp.com' +
         `/api/mangas/read/${props.match.params.name}/${id}/like`,
       {},
       {
