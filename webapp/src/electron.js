@@ -27,7 +27,7 @@ function createWindow() {
       protocol: 'file:',
       slashes: true,
     });
-  mainWindow.loadURL(startUrl);
+  mainWindow.loadURL('http://localhost:3000'); //use startUrl here to run client and desktop client togethor
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
