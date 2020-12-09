@@ -29,7 +29,7 @@ xdescribe('Mangas', () => {
 });
 
 xdescribe('Manga', () => {
-  xit('should get all recently-updated mangas', () => {
+  xit('should get all recently-updated mangas', async () => {
     chai
       .request(server)
       .get('/api/mangas')
