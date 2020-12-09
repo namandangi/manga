@@ -29,7 +29,7 @@ xdescribe('Mangas', () => {
 });
 
 xdescribe('Manga', () => {
-  xit('should get all recently-updated mangas', (done) => {
+  xit('should get all recently-updated mangas', () => {
     chai
       .request(server)
       .get('/api/mangas')
@@ -47,7 +47,6 @@ xdescribe('Manga', () => {
         response.body[0].should.have.property('author');
         response.body[0].should.have.property('genre');
         response.body[0].should.have.property('chapter');
-        done();
       });
   });
 });
