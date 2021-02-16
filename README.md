@@ -35,7 +35,7 @@
 
 1.  ExpressJS for server library.
 2.  Node.js for Environment.
-3.  Embedded JavaScript for templating.
+3.  React.js for developing dynamic user interfaces
 4.  Axios for promise based HTTP requests
 5.  Cheerio.js for quick and flexible implementation of core jQuery
 6.  Puppeteer for headless-browser based scraping
