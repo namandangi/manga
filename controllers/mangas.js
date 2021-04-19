@@ -10,7 +10,7 @@ const Chapter = require('../models/chapter');
 
 exports.getMangas = async (req, res) => {
   const mangaList = [];
-  await axios.get('https://kissmanga.link/').then((response) => {
+  axios.get('https://kissmanga.link/').then((response) => {
     const $ = cheerio.load(response.data);
 
     /*
